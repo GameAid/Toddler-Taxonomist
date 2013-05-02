@@ -82,14 +82,20 @@
 - (NSString *)sound_thats_scientific
 {
     NSString *str = [NSString stringWithFormat:@"thats_sci_%@%@",[self imagePrefix], @".mp3"];
-    NSLog(@"that's sound: %@", str);
+    // NSLog(@"that's sound: %@", str);
     return str;
 }
 
 - (NSString *)sound_where_scientific
 {
     NSString *str = [NSString stringWithFormat:@"where_sci_%@%@",[self imagePrefix], @".mp3"];
-    NSLog(@"question sound: %@", str);
+    // NSLog(@"question sound: %@", str);
+    return str;
+}
+
+- (NSString *)sound_description
+{
+    NSString *str = [NSString stringWithFormat:@"desc_%@%@",[self imagePrefix], @".mp3"];
     return str;
 }
 

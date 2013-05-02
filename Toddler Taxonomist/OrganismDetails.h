@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "BoardLayer.h"
 
 @class Organism;
-@class BoardLayer;
 
 @interface OrganismDetails : CCLayerColor {
     
@@ -18,6 +18,8 @@
 
 @property (retain, nonatomic) Organism *organism;
 @property (unsafe_unretained, nonatomic) BoardLayer *boardLayer;
+@property (assign, readwrite) BOOL descPlaying;
+@property (assign, readwrite) ALuint descSoundId;
 
 - (id)initWithColor:(ccColor4B)color andOrganism:(Organism *)org;
 

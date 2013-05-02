@@ -20,12 +20,21 @@
     if (self) {
         [self setOrganism:org];
         [self setTouchEnabled:YES];
+        [self setDescPlaying:NO];
+        [self setDescSoundId:0];
         
         // The close button
         CCMenuItemImage *closeButton = [CCMenuItemImage itemWithNormalImage:@"close.png"
                                                               selectedImage:@"close-dark.png"
                                                                       block:^(id sender) {
-                                                                          [[self boardLayer] closeDetails];
+                                                                          
+                                                  if (_descPlaying) {
+                                                      [[SimpleAudioEngine sharedEngine] stopEffect:_descSoundId];
+                                                      _descSoundId = NO;
+                                                      [[SimpleAudioEngine sharedEngine] unloadEffect:[_organism sound_description]];
+                                                  }
+                                                  [[self boardLayer] closeDetails];
+                                                                          
                                                                       }];
         [closeButton setAnchorPoint:ccp(1, 0)];
         CCMenu *menu = [CCMenu menuWithItems:closeButton, nil];
@@ -57,9 +66,11 @@
                                                                 fntFile:@"audimat_24_white.fnt"
                                                                   width:315.0f
                                                               alignment:kCCTextAlignmentLeft];
-        descriptiveText.position = ccp([[CCDirector sharedDirector] winSize].width * 0.65f,[[CCDirector sharedDirector] winSize].height * 0.97 );
+        descriptiveText.position = ccp([[CCDirector sharedDirector] winSize].width * 0.65f,
+                                       [[CCDirector sharedDirector] winSize].height * 0.97 );
+        
         descriptiveText.anchorPoint = ccp(0,1);
-        [self addChild:descriptiveText z:12 tag:9999];
+        [self addChild:descriptiveText z:12 tag:8675];
         
         CCLabelTTF *imageSourceLabel = [CCLabelTTF labelWithString:[_organism photoCredit] fontName:[[UIFont systemFontOfSize:12] fontName] fontSize:12];
         imageSourceLabel.color = ccc3(180, 180,180);
@@ -80,6 +91,38 @@
         
     }
     return self;
+}
+
+#pragma mark Touch events
+-(CGPoint) locationFromTouch:(UITouch*)touch
+{
+    //CCLOG(@"%@", NSStringFromSelector(_cmd));
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+	return [[CCDirector sharedDirector] convertToGL:touchLocation];
+}
+
+-(CGPoint) locationFromTouches:(NSSet*)touches
+{
+    //CCLOG(@"%@", NSStringFromSelector(_cmd));
+	return [self locationFromTouch:[touches anyObject]];
+}
+
+
+- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    CGPoint touchLocGL = [self locationFromTouch:[touches anyObject]];
+    CCLabelBMFont *info = (CCLabelBMFont *)[self getChildByTag:8675];
+    CGRect  descAreaRect = CGRectMake(info.position.x, info.position.y - info.contentSize.height, info.contentSize.width, info.contentSize.height);
+    
+    if (CGRectContainsPoint(descAreaRect, touchLocGL)) {
+        if (_descPlaying) {
+            [[SimpleAudioEngine sharedEngine] stopEffect:_descSoundId];
+            _descPlaying = NO;
+        } else {
+            _descSoundId = [[SimpleAudioEngine sharedEngine] playEffect:[_organism sound_description]];
+            _descPlaying = YES;
+        }
+    }
 }
 
 

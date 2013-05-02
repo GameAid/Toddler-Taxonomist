@@ -59,6 +59,7 @@
 - (NSString *)sound_where_generic;
 - (NSString *)sound_where_specific;
 - (NSString *)sound_where_scientific;
+- (NSString *)sound_description;
 
 - (NSString *)properSpeciesName;
 - (NSString *)properSubspeciesName;

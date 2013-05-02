@@ -140,7 +140,7 @@
 {
     CGSize size = [[CCDirector sharedDirector] winSize];
     Settings *settings = [Settings settings];
-    NSNumber *difficulty = [NSNumber numberWithInt:DifficultyHard];
+    NSNumber *difficulty = [NSNumber numberWithInt:DifficultyEasy];
     [[settings boardSettings] setObject:difficulty forKey:@"boardStartDifficulty"];
     
     CCMenuItemImage *startFinger = [CCMenuItemImage itemWithNormalImage:@"start.png"
