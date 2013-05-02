@@ -302,26 +302,20 @@
     [self setDetailPanelClosed:NO];
     
     if (![tile alreadyTapped]) {
-        NSString *noSoundString = [_soundsIncorrect objectAtIndex:arc4random()%[_soundsIncorrect count]];
-        CDSoundSource *noSource = [[SimpleAudioEngine sharedEngine] soundSourceForFile:noSoundString];
-        float noDuration        = noSource.durationInSeconds + 0.07f;
-        
-        [[SimpleAudioEngine sharedEngine] playEffect:noSoundString];
-        [self performSelector:@selector(playWrongAnswerSoundString:) withObject:[tile wrongAnswerSoundString] afterDelay:noDuration];
-        
-    } else {
-        _soundPlaying = [[SimpleAudioEngine sharedEngine] playEffect:[tile wrongAnswerSoundString]];
+        // The "incorrect answer" sound -- only played on the initial selection of a tile as incorrect
+        [[SoundManager manager] playNow:[_soundsIncorrect objectAtIndex:arc4random()%[_soundsIncorrect count]]];
+        [tile setAlreadyTapped:YES];
     }
     
-    if (![tile alreadyTapped]) {
-         [tile setAlreadyTapped:YES];
-    }
+    [[SoundManager manager] playNext:[tile wrongAnswerSoundString]];
+    
 }
 
 - (void) playWrongAnswerSoundString:(NSString *)wrongAnswerString
 {
     if (!_detailPanelClosed) {
-        _soundPlaying = [[SimpleAudioEngine sharedEngine] playEffect:wrongAnswerString];
+        [[SoundManager manager] playNext:wrongAnswerString asBackground:NO];
+        // _soundPlaying = [[SimpleAudioEngine sharedEngine] playEffect:wrongAnswerString];
     }
 }
 
@@ -332,14 +326,10 @@
     [self setDetailPanelClosed:YES];
     [self setTouchEnabled:YES];
     [self removeChildByTag:TagOrganismDetails cleanup:YES];
-    
-    // TODO: Possible delay needed
-    // Possibly need to introduce a delay here in the event that somebody taps the red x
-    // before the wrong answer sound is playing
 
-    [[SimpleAudioEngine sharedEngine] stopEffect:_soundPlaying];
-    
-    _soundPlaying = [[SimpleAudioEngine sharedEngine] playEffect:[_activeQuestion questionSoundString]];
+    // [[SoundManager manager] stopPlaying];
+    [[SoundManager manager] playNow:[_activeQuestion questionSoundString]];
+
 }
 
 #pragma mark SETUP

@@ -22,6 +22,8 @@
 // Finish whatever is playing and then play this
 - (float)playNext:(NSString *)songName asBackground:(BOOL)bg;
 
+- (float)playNext:(NSString *)songName;
+
 // Cancel what's playing and and the queue and play this now.
 - (float)playNow:(NSString *)songName;
 

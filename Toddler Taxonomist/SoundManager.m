@@ -31,6 +31,10 @@ static SoundManager *manager;
     return self;
 }
 
+- (float)playNext:(NSString *)songName
+{
+    return [self playNext:songName asBackground:NO];
+}
 
 - (float)playNext:(NSString *)songName asBackground:(BOOL)bg
 {

@@ -10,6 +10,7 @@
 #import "Organism.h"
 #import "Settings.h"
 #import "BoardLayer.h"
+#import "SoundManager.h"
 
 @implementation OrganismDetails
 
@@ -116,10 +117,10 @@
     
     if (CGRectContainsPoint(descAreaRect, touchLocGL)) {
         if (_descPlaying) {
-            [[SimpleAudioEngine sharedEngine] stopEffect:_descSoundId];
+            [[SoundManager manager] stopPlaying];
             _descPlaying = NO;
         } else {
-            _descSoundId = [[SimpleAudioEngine sharedEngine] playEffect:[_organism sound_description]];
+            [[SoundManager manager] playNext:[_organism sound_description]];
             _descPlaying = YES;
         }
     }
