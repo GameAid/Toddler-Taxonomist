@@ -32,7 +32,7 @@ static SoundManager *manager;
 }
 
 
-- (void)playNext:(NSString *)songName asBackground:(BOOL)bg
+- (float)playNext:(NSString *)songName asBackground:(BOOL)bg
 {
     // Handle background music
     if (bg) {
@@ -48,17 +48,28 @@ static SoundManager *manager;
         [[SimpleAudioEngine sharedEngine] performSelector:@selector(playBackgroundMusic:) withObject:_playingBackgroundName afterDelay:1.0f];
         
         [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.5f];
-        return;
+        return 0.0f;
     }
+    
+    float length;
     
     // Handle effects
     if (_isPlayingEffect) {
+        CCLOG(@"playNext - on queue: %@", songName);
+        CDSoundSource *src = [[SimpleAudioEngine sharedEngine] soundSourceForFile:songName];
+        length = [src durationInSeconds];
+        
         [_playQueue addObject:songName];
+        
+        src = nil;
         
     } else {
         // Play it now
-        [self playNow:songName];
+        CCLOG(@"playNext - now: %@", songName);
+        length = [self playNow:songName];
     }
+    
+    return length;
 }
 
 
@@ -69,10 +80,7 @@ static SoundManager *manager;
 
 - (float)playNow:(NSString *)songName andEmptyQueue:(BOOL)empty
 {
-    if (_isPlayingEffect) {
-        [_playingSource stop];
-        [self unload:_playingName];
-    }
+    [self stopPlaying];
     
     if (empty) {
         [_playQueue removeAllObjects];
@@ -97,6 +105,10 @@ static SoundManager *manager;
 - (void)stopPlaying
 {
     if (_isPlayingEffect) {
+        CCLOG(@"Stopping %@", _playingName);
+        
+        [SoundManager cancelPreviousPerformRequestsWithTarget:self];
+        
         [_playingSource stop];
         
         [self unload:[_playingName copy]];

@@ -144,7 +144,7 @@
                     break;
                     
                 default:
-                    CCLOG(@"We should be here...");
+                    CCLOG(@"We shouldn't be here...");
                     break;
             }
             [self setQuestionNumberInSequence:0];
@@ -256,7 +256,6 @@
     [[self answerTiles] addObject:answerTile];
     
     // Set the question audio
-    // TODO: Add additional difficulty levels
     switch ([self qDifficulty]) {
         case DifficultyEasy:
         {

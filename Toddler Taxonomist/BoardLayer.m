@@ -13,6 +13,7 @@
 #import "AnimalCatalogue.h"
 #import "Organism.h"
 #import "OrganismDetails.h"
+#import "SoundManager.h"
 
 @implementation BoardLayer
 @synthesize picturesArray_1, picturesArray_2, picturesArray_4, picturesArray_8, picturesArray_40;
@@ -98,7 +99,9 @@
 
 - (void) delayFlagUpdateTextures:(NSNotification *)notification
 {
-    [self performSelector:@selector(flagUpdateTextures) withObject:nil afterDelay:1.0f];
+    [self performSelector:@selector(flagUpdateTextures)
+               withObject:nil
+               afterDelay:1.0f];
 }
 
 - (void) flagUpdateTextures
@@ -192,7 +195,7 @@
         CGPoint rectOrgin = rect.origin;
         CGPoint truePoint = ccpAdd(rectOrgin, ccp(rect.size.width * 0.5, rect.size.height * 0.5));
         
-        t.position = truePoint;//[[positionArray objectAtIndex:i] CGRectValue].origin;
+        t.position = truePoint;
         
         t.visible = YES;
         int tileTag = [[NSString stringWithFormat:@"%i%i", _randomPrefix, i] intValue];
@@ -209,7 +212,6 @@
         
     } else {
         NSString *questionText = [q questionString];
-        //CCLOG(@"question string: %@", questionText);
         CCLabelBMFont *questionLabel = [CCLabelBMFont labelWithString:questionText fntFile:@"audimat_36_white.fnt"];
         questionLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 64);
         [self addChild:questionLabel];
@@ -218,18 +220,8 @@
     // Set flag to turn on touch enabled
     [self setNeedsTouch:YES];
     
-    // Play question
-    [[SimpleAudioEngine sharedEngine] playEffect:[q questionSoundString]];
-    
-    // In the event a delay is needed to play the question; shouldn't be needed
-    // because the program no longer generates the next question until the
-    // Yes! sounds plays from the previous question
-    
-    /*
-    [[SimpleAudioEngine sharedEngine] performSelector:@selector(playEffect:)
-                                           withObject:[q questionSoundString]
-                                           afterDelay:[self correctSoundDelay]];
-     */
+    // Play question audio
+    [[SoundManager manager] playNext:[q questionSoundString] asBackground:NO];
     
 }
 
@@ -280,24 +272,23 @@
     [self setTouchEnabled:NO];
     
     NSString *correctSoundString = [_soundsCorrect objectAtIndex:arc4random()%[_soundsCorrect count]];
-    CDSoundSource *correctSource = [[SimpleAudioEngine sharedEngine] soundSourceForFile:correctSoundString];
+    // CDSoundSource *correctSource = [[SimpleAudioEngine sharedEngine] soundSourceForFile:correctSoundString];
     
-    CDSoundSource *confirmSource = [[SimpleAudioEngine sharedEngine] soundSourceForFile:[tile confirmAnswerSoundString]];
+    // CDSoundSource *confirmSource = [[SimpleAudioEngine sharedEngine] soundSourceForFile:[tile confirmAnswerSoundString]];
+    
+    float delay;
     
     // Stop question sound
-    [[SimpleAudioEngine sharedEngine] stopEffect:_soundPlaying];
+    // [[SimpleAudioEngine sharedEngine] stopEffect:_soundPlaying];
+    
     
     // Yes!
-    [[SimpleAudioEngine sharedEngine] playEffect:correctSoundString];
+    delay = [[SoundManager manager] playNow:correctSoundString];
     
     // Confirm the correct answer
-    [[SimpleAudioEngine sharedEngine] performSelector:@selector(playEffect:)
-                                           withObject:[tile confirmAnswerSoundString]
-                                           afterDelay:[correctSource durationInSeconds]];
-    
-    float totalDelay = [correctSource durationInSeconds] + [confirmSource durationInSeconds];
-    
-    [self performSelector:@selector(proceedToNextQuestion) withObject:nil afterDelay:totalDelay];
+    delay += [[SoundManager manager] playNext:[tile confirmAnswerSoundString] asBackground:NO];
+
+    [self performSelector:@selector(proceedToNextQuestion) withObject:nil afterDelay:delay];
 }
 
 - (void) incorrectAnswer:(Tile *)tile
@@ -319,8 +310,6 @@
         [self performSelector:@selector(playWrongAnswerSoundString:) withObject:[tile wrongAnswerSoundString] afterDelay:noDuration];
         
     } else {
-        
-        // This works great
         _soundPlaying = [[SimpleAudioEngine sharedEngine] playEffect:[tile wrongAnswerSoundString]];
     }
     
@@ -336,19 +325,6 @@
     }
 }
 
-/*
-- (void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
-{
-    //CCLOG(@"%@", NSStringFromSelector(_cmd));
-}
- */
-
-/*
--(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	CCLOG(@"%@", NSStringFromSelector(_cmd));
-}
- */
 
 #pragma mark Callbacks
 - (void)closeDetails

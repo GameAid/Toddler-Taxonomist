@@ -341,7 +341,7 @@ static AnimalCatalogue *sharedAnimalCatalogue;
             break;
     }
     
-    NSString *questionString = [NSString stringWithFormat:@"Which of these animals is the %@?", answerString];
+    NSString *questionString = [NSString stringWithFormat:@"Where is the %@?", answerString];
     
     CCLOG(@"answerString: %@", answerString);
     
