@@ -94,7 +94,7 @@ Sound files use the `image_01` name or each organism, so they must be saved with
 
 There are 10 "correct" and 10 "incorrect" sounds, titled from `correct_1.mp3` to `correct_10.mp3` and `incorrect_1.mp3` to `incorrect_10.mp3`.
 
-Additional sounds for informational text have yet to be added.
+Each species has voiceover of their descriptive text. It is stored in a file called `desc_imagename.mp3`.
 
 -------
 
