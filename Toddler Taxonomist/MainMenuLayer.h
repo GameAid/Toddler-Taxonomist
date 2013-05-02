@@ -12,6 +12,7 @@
 
 @class MainMenuSlider;
 @class CDSoundSource;
+@class InfoLayer;
 
 @interface MainMenuLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate>
 {
@@ -24,5 +25,6 @@
 
 // returns a CCScene that contains the MainMenuLayer as the only child
 +(CCScene *) scene;
+- (void) addInfoLayerAsChild:(InfoLayer *)infoLayer;
 
 @end

@@ -10,6 +10,7 @@
 #import "cocos2d.h"
 
 @class AnimalCatalogue;
+@class SoundManager;
 
 // Added only for iOS 6 support
 @interface MyNavigationController : UINavigationController <CCDirectorDelegate>
@@ -21,6 +22,7 @@
 	MyNavigationController *navController_;
 
 	CCDirectorIOS	*director_;							// weak ref
+    SoundManager    *soundManager;
 }
 
 @property (nonatomic, retain) UIWindow *window;

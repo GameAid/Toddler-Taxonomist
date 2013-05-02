@@ -316,8 +316,6 @@
         float noDuration        = noSource.durationInSeconds + 0.07f;
         
         [[SimpleAudioEngine sharedEngine] playEffect:noSoundString];
-        
-        // TODO: Doesn't use scientific name
         [self performSelector:@selector(playWrongAnswerSoundString:) withObject:[tile wrongAnswerSoundString] afterDelay:noDuration];
         
     } else {

@@ -10,7 +10,8 @@
 // Import the interfaces
 #import "IntroLayer.h"
 #import "MainMenuLayer.h"
-#import "SimpleAudioEngine.h"
+#import "InfoLayer.h"
+#import "SoundManager.h"
 
 
 #pragma mark - IntroLayer
@@ -52,8 +53,9 @@
 		}
 		background.position = ccp(size.width/2, size.height/2);
         
-        CDSoundSource *gameaidLeader = [[SimpleAudioEngine sharedEngine] soundSourceForFile:@"gameaid_leader.mp3"];
-        [gameaidLeader play];
+        [[SoundManager manager] playNext:@"gameaid_leader.mp3" asBackground:NO];
+        
+        _infoLayer = [[InfoLayer alloc] initWithColor:ccc4(0, 0, 0, 220)];
 
 		// add the label as a child to this Layer
 		[self addChild: background];
@@ -70,6 +72,14 @@
 
 - (void) continueToMainMenu
 {
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[MainMenuLayer scene]]];
+    CCScene *mainMenuScene = [MainMenuLayer scene];
+    
+    // Preload the _infoLayer to avoid the delay that happens on the Main menu (hopefully)
+    
+    MainMenuLayer *mainMenuLayer = (MainMenuLayer *)[mainMenuScene getChildByTag:1];
+    [mainMenuLayer addInfoLayerAsChild:_infoLayer];
+    _infoLayer = nil;
+    
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:mainMenuScene]];
 }
 @end

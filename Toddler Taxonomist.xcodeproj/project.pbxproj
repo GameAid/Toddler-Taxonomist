@@ -936,6 +936,7 @@
 		6F5E393F1732147200D6EAF2 /* desc_zebra_01.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6F5E38EC1732147200D6EAF2 /* desc_zebra_01.mp3 */; };
 		6F5E39401732147200D6EAF2 /* desc_zebra_02.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6F5E38ED1732147200D6EAF2 /* desc_zebra_02.mp3 */; };
 		6F5E39411732147200D6EAF2 /* desc_zebra_03.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6F5E38EE1732147200D6EAF2 /* desc_zebra_03.mp3 */; };
+		6F5E39441732B74300D6EAF2 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5E39431732B74300D6EAF2 /* SoundManager.m */; };
 		6F9FFADE17220ED800A88391 /* alligator_01_256-256.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6F9FFA8617220ED800A88391 /* alligator_01_256-256.jpg */; };
 		6F9FFADF17220ED800A88391 /* alligator_01_1024-640.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6F9FFA8717220ED800A88391 /* alligator_01_1024-640.jpg */; };
 		6F9FFAE017220ED800A88391 /* alligator_01_1024-1280.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6F9FFA8817220ED800A88391 /* alligator_01_1024-1280.jpg */; };
@@ -2220,6 +2221,8 @@
 		6F5E38EC1732147200D6EAF2 /* desc_zebra_01.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = desc_zebra_01.mp3; sourceTree = "<group>"; };
 		6F5E38ED1732147200D6EAF2 /* desc_zebra_02.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = desc_zebra_02.mp3; sourceTree = "<group>"; };
 		6F5E38EE1732147200D6EAF2 /* desc_zebra_03.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = desc_zebra_03.mp3; sourceTree = "<group>"; };
+		6F5E39421732B74300D6EAF2 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		6F5E39431732B74300D6EAF2 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundManager.m; sourceTree = "<group>"; };
 		6F9FFA8617220ED800A88391 /* alligator_01_256-256.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "alligator_01_256-256.jpg"; sourceTree = "<group>"; };
 		6F9FFA8717220ED800A88391 /* alligator_01_1024-640.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "alligator_01_1024-640.jpg"; sourceTree = "<group>"; };
 		6F9FFA8817220ED800A88391 /* alligator_01_1024-1280.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "alligator_01_1024-1280.jpg"; sourceTree = "<group>"; };
@@ -2927,6 +2930,8 @@
 				6F0A75FE171EF8A900E62450 /* Organism.m */,
 				6FBCD95417258C2800F48A57 /* OrganismDetails.h */,
 				6FBCD95517258C2800F48A57 /* OrganismDetails.m */,
+				6F5E39421732B74300D6EAF2 /* SoundManager.h */,
+				6F5E39431732B74300D6EAF2 /* SoundManager.m */,
 				6F0A76B817204AA700E62450 /* Tile.h */,
 				6F0A76B917204AA700E62450 /* Tile.m */,
 				6F226D481723097800CF5936 /* Utility Classes */,
@@ -5150,6 +5155,7 @@
 				6FEC2C02172A006B00A5C3B7 /* MainMenuSlider.m in Sources */,
 				6FF43312172F427E00F5E617 /* InfoLayer.m in Sources */,
 				6FF4334517301B4A00F5E617 /* NSString+UnicodeUtilities.m in Sources */,
+				6F5E39441732B74300D6EAF2 /* SoundManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

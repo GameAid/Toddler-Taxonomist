@@ -10,10 +10,14 @@
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
 
+@class InfoLayer;
+
 // HelloWorldLayer
 @interface IntroLayer : CCLayer
 {
 }
+
+@property (retain, nonatomic) InfoLayer *infoLayer;
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;

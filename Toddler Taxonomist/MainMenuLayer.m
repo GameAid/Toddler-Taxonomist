@@ -15,6 +15,7 @@
 #import "MainMenuSlider.h"
 #import "CDXPropertyModifierAction.h"
 #import "InfoLayer.h"
+#import "SoundManager.h"
 
 
 @implementation MainMenuLayer
@@ -22,16 +23,12 @@
 // Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
 {
-	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
-	// 'layer' is an autorelease object.
+
+	CCScene *scene       = [CCScene node];
 	MainMenuLayer *layer = [MainMenuLayer node];
-	
-	// add layer as a child to scene
-	[scene addChild: layer];
-	
-	// return the scene
+    
+	[scene addChild: layer z:0 tag:1];
+
 	return scene;
 }
 
@@ -46,7 +43,8 @@
         [self createButtons];
         [self createSliders];
         [self scheduleUpdate];
-        [self startMenuMusic];
+        
+        [[SoundManager manager] playNext:@"ThemeSong_v2.mp3" asBackground:NO];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(closeInfoLayer:)
@@ -56,19 +54,6 @@
 	return self;
 }
 
-- (void) startMenuMusic
-{
-    
-    [[CDAudioManager sharedManager] setResignBehavior:kAMRBStopPlay autoHandle:YES];
-    [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"GameLoop.mp3"];
-    
-    _themeSong = [[SimpleAudioEngine sharedEngine] soundSourceForFile:@"ThemeSong_v2.mp3"];
-    
-    _themeSong.looping = NO;
-	_themeSong.gain = 0.8f;
-	[_themeSong play];
-}
-
 - (void) onExit
 {
     [super onExit];
@@ -76,19 +61,12 @@
 
 - (void) createMainLabel
 {
-    // create and initialize a Label
-    //CCLabelTTF *label  = [CCLabelTTF labelWithString:@"Toddler Taxonomist" fontName:@"Marker Felt" fontSize:64];
-    
-    CCLabelBMFont* label = [CCLabelBMFont labelWithString:@"Toddler Taxonomist" fntFile:@"audimat_45_white.fnt"];
-    
-    // ask director for the window size
     CGSize size = [[CCDirector sharedDirector] winSize];
     
-    // position the label on the center of the screen
-    label.position =  ccp( size.width/8 , size.height/6 - size.height/12 );
-    label.anchorPoint = ccp(0,0.5);
-    
-    // add the label as a child to this Layer
+    CCLabelBMFont* label = [CCLabelBMFont labelWithString:@"Toddler Taxonomist" fntFile:@"audimat_45_white.fnt"];
+    label.position       =  ccp( size.width/8 , size.height/6 - size.height/12 );
+    label.anchorPoint    = ccp(0,0.5);
+
     [self addChild:label z:12 tag:1124];
 }
 
@@ -145,20 +123,22 @@
     
     CCMenuItemImage *startFinger = [CCMenuItemImage itemWithNormalImage:@"start.png"
                                                           selectedImage:@"start-dark.png"
-                                                                  block:^(id sender) {
+                                                                  block:^(id sender)
+    {                                                  
+                    [[SoundManager manager] fadeEffect];
+                    [[SoundManager manager] playNext:@"GameLoop.mp3" asBackground:YES];
+                
                                                                       
-                                                                      // Fade out the theme song -- what happens if it isn't playing?
-                                                                      [CDXPropertyModifierAction fadeSoundEffect:1.0f finalVolume:0.0f curveType:kIT_SCurve shouldStop:YES effect:_themeSong];
-                                                                      [[SimpleAudioEngine sharedEngine] performSelector:@selector(unloadEffect:) withObject:@"ThemeSong_v2.mp3" afterDelay:3.0f];
+                    CCScene *gameScene = [LoadingScene sceneWithTargetScene:TargetSceneBoardScene];
                                                                       
-                                                                      [[SimpleAudioEngine sharedEngine] performSelector:@selector(playBackgroundMusic:) withObject:@"GameLoop.mp3" afterDelay:1.0f];
+                    [[CCDirector sharedDirector] performSelector:@selector(replaceScene:)
+                                                      withObject:gameScene
+                                                      afterDelay:1.0f];
                                                                       
-                                                                      [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.5f];
-                                                                      
-                                                                      CCScene *gameScene = [LoadingScene sceneWithTargetScene:TargetSceneBoardScene];
-                                                                      [[CCDirector sharedDirector] performSelector:@selector(replaceScene:) withObject:gameScene afterDelay:1.0f];
-                                                                      
-                                                                  }];
+                    [self removeChildByTag:1125 cleanup:YES];
+                    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
+    }];
+    
     [startFinger setAnchorPoint:ccp(1, 0)];
     CCMenu *menu = [CCMenu menuWithItems:startFinger, nil];
     [menu setPosition:ccp(size.width, 0)];
@@ -178,24 +158,33 @@
     [self addChild:infoMenu z:10 tag:1123];
 }
 
+- (void) addInfoLayerAsChild:(InfoLayer *)infoLayer
+{
+    [self addChild:infoLayer z:999 tag:1125];
+    [self getChildByTag:1125].visible = NO;
+    [[self getChildByTag:1125] pauseSchedulerAndActions];
+}
+
 - (void) openInfoLayer
 {
     [self getChildByTag:1122].visible = NO;
     [self getChildByTag:1123].visible = NO;
     [self getChildByTag:1124].visible = NO;
-    
-    CCLayer *infoLayer = [[InfoLayer alloc] initWithColor:ccc4(0, 0, 0, 220)];
-    [self addChild:infoLayer z:99999 tag:1125];
+
+    // Show the infoLayer and run it
+    [self getChildByTag:1125].visible = YES;
+    [[self getChildByTag:1125] resumeSchedulerAndActions];
 }
 
 - (void) closeInfoLayer:(NSNotification *)notification
 {
-    // CCLOG(@"MainMenuLayer closeInfoPanel");
-    [self removeChildByTag:1125 cleanup:YES];
+    // Hide the infoLayer and pause it
+    [self getChildByTag:1125].visible = NO;
+    [[self getChildByTag:1125] pauseSchedulerAndActions];
+    
     [self getChildByTag:1122].visible = YES;
     [self getChildByTag:1123].visible = YES;
     [self getChildByTag:1124].visible = YES;
-    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
 - (void) createSliders
