@@ -67,7 +67,6 @@
 	
 	// Initialize the sound manager
     soundManager = [SoundManager manager];
-    [[CDAudioManager sharedManager] setResignBehavior:kAMRBStopPlay autoHandle:YES];
     [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"GameLoop.mp3"];
     
 	// CCGLView creation

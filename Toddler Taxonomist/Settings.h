@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-#import "SimpleAudioEngine.h"
+#import "AnimalCatalogue.h"
 
 typedef enum
 {
@@ -18,11 +18,27 @@ typedef enum
 } Tags;
 
 @interface Settings : NSObject {
-    SimpleAudioEngine *soundEngine;
+
 }
 
 @property (strong, readwrite) NSMutableDictionary *boardSettings;
+@property (strong, readwrite) NSMutableDictionary *scoreBoard;
 
 +(Settings *)settings;
 
+- (void)reportCorrectAt:(QuestionDifficulty)difficulty;
+- (void)reportIncorrectAt:(QuestionDifficulty)difficulty;
+
+- (unsigned short)correctAnswersAt:(QuestionDifficulty)difficulty;
+- (unsigned short)incorrectAnswersAt:(QuestionDifficulty)difficulty;
+- (unsigned short)totalCorrectAt:(QuestionDifficulty)difficulty;
+
+- (unsigned short)totalCorrect;
+- (unsigned short)totalIncorrect;
+- (unsigned short)totalQuestions;
+
+- (unsigned short)correctStreak;
+- (unsigned short)incorrectStreak;
 @end
+
+

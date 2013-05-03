@@ -343,10 +343,6 @@
 - (void)dealloc
 {
     CCLOG(@"Deallocating question...");
-    // Unload some sounds to free memory
-    [[SimpleAudioEngine sharedEngine] unloadEffect:[self questionSoundString]];
-    [[SimpleAudioEngine sharedEngine] unloadEffect:[(Tile *)[_answerTiles objectAtIndex:0] confirmAnswerSoundString]];
-    
     _answerTiles = nil;
     _questionString = nil;
 }

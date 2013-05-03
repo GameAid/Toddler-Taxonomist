@@ -133,6 +133,8 @@ static QuestionDifficulty _startDifficulty;
     {
                     // Hide the start button
                     [self getChildByTag:1122].visible = NO;
+                    [self getChildByTag:3333].visible = NO;
+                    [self getChildByTag:1123].visible = NO;
         
                     [[SoundManager manager] fadeEffect];
                     [[SoundManager manager] playNext:@"GameLoop.mp3" asBackground:YES];
@@ -272,6 +274,9 @@ static QuestionDifficulty _startDifficulty;
     // Show the infoLayer and run it
     [self getChildByTag:1125].visible = YES;
     [[self getChildByTag:1125] resumeSchedulerAndActions];
+    
+    // Hide the difficulty menu
+    [self getChildByTag:3333].visible = NO;
 }
 
 - (void) closeInfoLayer:(NSNotification *)notification
@@ -283,6 +288,9 @@ static QuestionDifficulty _startDifficulty;
     [self getChildByTag:1122].visible = YES;
     [self getChildByTag:1123].visible = YES;
     [self getChildByTag:1124].visible = YES;
+    
+    // Show the difficulty menu
+    [self getChildByTag:3333].visible = YES;
 }
 
 - (void) createSliders

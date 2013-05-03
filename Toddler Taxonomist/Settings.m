@@ -24,11 +24,206 @@ static Settings *sharedSettings;
 - (id) init {
     self = [super init];
     if (self) {
-        // Baseline sound settings
-        [CDSoundEngine setMixerSampleRate:CD_SAMPLE_RATE_MID];
-        [[CDAudioManager sharedManager] setResignBehavior:kAMRBStopPlay autoHandle:YES];
+        _scoreBoard = [[NSMutableDictionary alloc] init];
+
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"totalQuestions"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"correctStreak"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"incorrectStreak"];
+        
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"correctEasy"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"correctMedium"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"correctHard"];
+        
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"incorrectEasy"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"incorrectMedium"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"incorrectHard"];
+        
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"totalEasy"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"totalMedium"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"totalHard"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"totalCorrect"];
+        [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"totalIncorrect"];
+        
     }
     return self;
+}
+
+#pragma mark -
+#pragma mark Scoreboard Management
+
+
+- (void)increment:(NSString *)key
+{
+    unsigned short newValue = [[_scoreBoard objectForKey:key] unsignedShortValue] + 1;
+    [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:newValue] forKey:key];
+    
+}
+
+- (void)reportCorrectAt:(QuestionDifficulty)difficulty
+{
+    [self increment:@"totalCorrect"];
+    [self increment:@"totalQuestions"];
+    [self increment:@"correctStreak"];
+    [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"incorrectStreak"];
+    
+    switch (difficulty) {
+        case DifficultyEasy:
+            [self increment:@"correctEasy"];
+            [self increment:@"totalEasy"];
+            break;
+            
+        case DifficultyMedium:
+            [self increment:@"correctMedium"];
+            [self increment:@"totalMedium"];
+            break;
+            
+        case DifficultyHard:
+            [self increment:@"correctHard"];
+            [self increment:@"totalHard"];
+            break;
+            
+        default:
+            NSLog(@"We shouldn't be here.");
+            break;
+    }
+}
+
+- (void)reportIncorrectAt:(QuestionDifficulty)difficulty
+{
+    [self increment:@"totalIncorrect"];
+    [self increment:@"totalQuestions"];
+    [self increment:@"incorrectStreak"];
+    [_scoreBoard setObject:[NSNumber numberWithUnsignedShort:0] forKey:@"correctStreak"];
+    
+    switch (difficulty) {
+        case DifficultyEasy:
+            [self increment:@"incorrectEasy"];
+            [self increment:@"totalEasy"];
+            break;
+            
+        case DifficultyMedium:
+            [self increment:@"incorrectMedium"];
+            [self increment:@"totalMedium"];
+            break;
+            
+        case DifficultyHard:
+            [self increment:@"incorrectHard"];
+            [self increment:@"totalHard"];
+            break;
+            
+        default:
+            NSLog(@"We shouldn't be here.");
+            break;
+    }
+}
+
+- (unsigned short)correctAnswersAt:(QuestionDifficulty)difficulty
+{
+    NSString *key;
+    
+    switch (difficulty) {
+        case DifficultyEasy:
+        {   key = @"correctEasy";
+            break;
+        }
+            
+        case DifficultyMedium:
+        {   key = @"correctMedium";
+            break;
+        }
+            
+        case DifficultyHard:
+        {   key = @"correctHard";
+            break;
+        }
+            
+        default:
+            NSLog(@"We shouldn't be here.");
+            break;
+    }
+    
+    return [[_scoreBoard objectForKey:key] unsignedShortValue];
+}
+
+- (unsigned short)incorrectAnswersAt:(QuestionDifficulty)difficulty
+{
+    NSString *key;
+    
+    switch (difficulty) {
+        case DifficultyEasy:
+        {   key = @"incorrectEasy";
+            break;
+        }
+            
+        case DifficultyMedium:
+        {   key = @"incorrectMedium";
+            break;
+        }
+            
+        case DifficultyHard:
+        {   key = @"incorrectHard";
+            break;
+        }
+            
+        default:
+            NSLog(@"We shouldn't be here.");
+            break;
+    }
+    
+    return [[_scoreBoard objectForKey:key] unsignedShortValue];
+}
+
+- (unsigned short)totalCorrectAt:(QuestionDifficulty)difficulty
+{
+    NSString *key;
+    
+    switch (difficulty) {
+        case DifficultyEasy:
+        {   key = @"totalEasy";
+            break;
+        }
+            
+        case DifficultyMedium:
+        {   key = @"totalMedium";
+            break;
+        }
+            
+        case DifficultyHard:
+        {   key = @"totalHard";
+            break;
+        }
+            
+        default:
+            NSLog(@"We shouldn't be here.");
+            break;
+    }
+    
+    return [[_scoreBoard objectForKey:key] unsignedShortValue];
+}
+
+- (unsigned short)totalCorrect
+{
+    return [[_scoreBoard objectForKey:@"totalCorrect"] unsignedShortValue];
+}
+
+- (unsigned short)totalIncorrect
+{
+    return [[_scoreBoard objectForKey:@"totalIncorrect"] unsignedShortValue];
+}
+
+- (unsigned short)totalQuestions
+{
+    return [[_scoreBoard objectForKey:@"totalQuestions"] unsignedShortValue];
+}
+
+- (unsigned short)correctStreak
+{
+    return [[_scoreBoard objectForKey:@"correctStreak"] unsignedShortValue];
+}
+
+- (unsigned short)incorrectStreak
+{
+    return [[_scoreBoard objectForKey:@"incorrectStreak"] unsignedShortValue];
 }
 
 @end

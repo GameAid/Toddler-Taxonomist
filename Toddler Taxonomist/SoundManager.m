@@ -17,6 +17,8 @@ static SoundManager *manager;
 {
     if (!manager) {
         manager = [[SoundManager alloc] init];
+        [CDSoundEngine setMixerSampleRate:CD_SAMPLE_RATE_MID];
+        [[CDAudioManager sharedManager] setResignBehavior:kAMRBStopPlay autoHandle:YES];
     }
     return manager;
 }
@@ -50,7 +52,6 @@ static SoundManager *manager;
         _playingBackgroundName = songName;
         
         [[SimpleAudioEngine sharedEngine] performSelector:@selector(playBackgroundMusic:) withObject:_playingBackgroundName afterDelay:1.0f];
-        
         [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.5f];
         return 0.0f;
     }
