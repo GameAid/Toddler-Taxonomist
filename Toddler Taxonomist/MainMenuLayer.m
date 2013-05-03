@@ -20,6 +20,9 @@
 
 @implementation MainMenuLayer
 
+// TODO: Fix this -- why don't it work in the header file?
+static QuestionDifficulty _startDifficulty;
+
 // Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
 {
@@ -37,6 +40,9 @@
 {
     self = [super init];
 	if( (self) ) {
+        
+        [self setTouchEnabled:YES];
+        _startDifficulty = DifficultyEasy;
         
         [self createMainLabel];
         // [self createGameKitStuff];
@@ -118,13 +124,16 @@
 {
     CGSize size = [[CCDirector sharedDirector] winSize];
     Settings *settings = [Settings settings];
-    NSNumber *difficulty = [NSNumber numberWithInt:DifficultyEasy];
+    NSNumber *difficulty = [NSNumber numberWithInt:_startDifficulty];
     [[settings boardSettings] setObject:difficulty forKey:@"boardStartDifficulty"];
     
     CCMenuItemImage *startFinger = [CCMenuItemImage itemWithNormalImage:@"start.png"
                                                           selectedImage:@"start-dark.png"
                                                                   block:^(id sender)
-    {                                                  
+    {
+                    // Hide the start button
+                    [self getChildByTag:1122].visible = NO;
+        
                     [[SoundManager manager] fadeEffect];
                     [[SoundManager manager] playNext:@"GameLoop.mp3" asBackground:YES];
                 
@@ -139,9 +148,9 @@
                     [[CCTextureCache sharedTextureCache] removeUnusedTextures];
     }];
     
-    [startFinger setAnchorPoint:ccp(1, 0)];
+    [startFinger setAnchorPoint:ccp(0, 0)];
     CCMenu *menu = [CCMenu menuWithItems:startFinger, nil];
-    [menu setPosition:ccp(size.width, 0)];
+    [menu setPosition:ccp(size.width - startFinger.contentSize.width, 0)];
     [menu setAnchorPoint:ccp(0,0)];
     [self addChild:menu z:10 tag:1122];
     
@@ -156,6 +165,95 @@
     [infoMenu setPosition:ccp(0,0)];
     [infoMenu setAnchorPoint:ccp(0,0)];
     [self addChild:infoMenu z:10 tag:1123];
+    
+    
+    // Difficulty Buttons
+    CGPoint difficultyPosition = ccpSub(menu.position, ccp(startFinger.contentSize.width * 0.22,0));
+    
+    _easyButton = [CCMenuItemImage itemWithNormalImage:@"difficulty_easy.png"
+                                         selectedImage:@"difficulty_easy.png"
+                                                 block:^(id sender)
+                                            {
+                                                [self changeDifficulty:DifficultyMedium];
+                                            }];
+    
+    
+    _easyButton.anchorPoint = ccp(1,0);
+    _easyButton.visible     = YES;
+    
+    _mediumButton = [CCMenuItemImage itemWithNormalImage:@"difficulty_medium.png"
+                                           selectedImage:@"difficulty_medium.png"
+                                                   block:^(id sender)
+                                            {
+                                                [self changeDifficulty:DifficultyHard];
+                                            }];
+    
+    _mediumButton.anchorPoint = ccp(1,0);
+    _mediumButton.visible     = NO;
+    
+    _hardButton = [CCMenuItemImage itemWithNormalImage:@"difficulty_hard.png"
+                                         selectedImage:@"difficulty_hard.png"
+                                                 block:^(id sender)
+                                            {
+                                                [self changeDifficulty:DifficultyEasy];
+                                            }];
+    
+    _hardButton.anchorPoint = ccp(1,0);
+    _hardButton.visible     = NO;
+
+    CCMenu *difficultyMenu = [CCMenu menuWithItems:_easyButton, _mediumButton, _hardButton, nil];
+    difficultyMenu.position = difficultyPosition;
+    [self addChild:difficultyMenu z:10 tag:3333];
+    
+}
+
+- (void) changeDifficulty:(QuestionDifficulty)difficulty
+{
+    switch (difficulty) {
+        case DifficultyEasy:
+        {
+            CCLOG(@"Switching to DifficulyEasy");
+            _hardButton.visible     = NO;
+            _mediumButton.visible   = NO;
+            _easyButton.visible     = YES;
+            _startDifficulty        = DifficultyEasy;
+            break;
+        }
+            
+        case DifficultyMedium:
+        {
+            CCLOG(@"Switching to DifficultyMedium");
+            _hardButton.visible     = NO;
+            _mediumButton.visible   = YES;
+            _easyButton.visible     = NO;
+            _startDifficulty        = DifficultyMedium;
+            break;
+        }
+            
+        case DifficultyHard:
+        {
+            CCLOG(@"Switching to DifficultyHard");
+            _hardButton.visible     = YES;
+            _mediumButton.visible   = NO;
+            _easyButton.visible     = NO;
+            _startDifficulty        = DifficultyHard;
+            break;
+        }
+            
+        default:
+        {
+            CCLOG(@"Switching to DefaultDifficulty");
+            _hardButton.visible     = NO;
+            _mediumButton.visible   = NO;
+            _easyButton.visible     = YES;
+            _startDifficulty        = DifficultyEasy;
+            break;
+        }
+    }
+    
+    NSNumber *diff = [NSNumber numberWithInt:_startDifficulty];
+    [[[Settings settings] boardSettings] setObject:diff forKey:@"boardStartDifficulty"];
+    
 }
 
 - (void) addInfoLayerAsChild:(InfoLayer *)infoLayer

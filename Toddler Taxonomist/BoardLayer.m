@@ -78,9 +78,6 @@
             [[SimpleAudioEngine sharedEngine] preloadEffect:str];
         }
         
-        // TODO: Remove for final build
-        // [self createRandomColors];
-        
         // Establish picture locations
         [self establishPictureLocations];
         
@@ -227,7 +224,6 @@
 
 - (void) proceedToNextQuestion
 {
-    //CCLOG(@"%@", NSStringFromSelector(_cmd));
     [[AnimalCatalogue animalCatalogue] resetCatalogue];
     Question *newQ = [[Question alloc] initContinuingFromQuestion:[self activeQuestion] correctOnFirstGuess:[self firstGuess]];
     [self setQuestionWithDifficulty:nil orQuestion:newQ];
@@ -236,14 +232,12 @@
 #pragma mark Touch events
 -(CGPoint) locationFromTouch:(UITouch*)touch
 {
-    //CCLOG(@"%@", NSStringFromSelector(_cmd));
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	return [[CCDirector sharedDirector] convertToGL:touchLocation];
 }
 
 -(CGPoint) locationFromTouches:(NSSet*)touches
 {
-    //CCLOG(@"%@", NSStringFromSelector(_cmd));
 	return [self locationFromTouch:[touches anyObject]];
 }
 
@@ -271,22 +265,11 @@
 {
     [self setTouchEnabled:NO];
     
-    NSString *correctSoundString = [_soundsCorrect objectAtIndex:arc4random()%[_soundsCorrect count]];
-    // CDSoundSource *correctSource = [[SimpleAudioEngine sharedEngine] soundSourceForFile:correctSoundString];
-    
-    // CDSoundSource *confirmSource = [[SimpleAudioEngine sharedEngine] soundSourceForFile:[tile confirmAnswerSoundString]];
-    
     float delay;
     
-    // Stop question sound
-    // [[SimpleAudioEngine sharedEngine] stopEffect:_soundPlaying];
-    
-    
     // Yes!
-    delay = [[SoundManager manager] playNow:correctSoundString];
-    
-    // Confirm the correct answer
-    delay += [[SoundManager manager] playNext:[tile confirmAnswerSoundString] asBackground:NO];
+    delay =  [[SoundManager manager] playNow:[_soundsCorrect objectAtIndex:arc4random()%[_soundsCorrect count]]];
+    delay += [[SoundManager manager] playNext:[tile confirmAnswerSoundString]];
 
     [self performSelector:@selector(proceedToNextQuestion) withObject:nil afterDelay:delay];
 }
@@ -314,8 +297,7 @@
 - (void) playWrongAnswerSoundString:(NSString *)wrongAnswerString
 {
     if (!_detailPanelClosed) {
-        [[SoundManager manager] playNext:wrongAnswerString asBackground:NO];
-        // _soundPlaying = [[SimpleAudioEngine sharedEngine] playEffect:wrongAnswerString];
+        [[SoundManager manager] playNext:wrongAnswerString];
     }
 }
 
@@ -327,7 +309,6 @@
     [self setTouchEnabled:YES];
     [self removeChildByTag:TagOrganismDetails cleanup:YES];
 
-    // [[SoundManager manager] stopPlaying];
     [[SoundManager manager] playNow:[_activeQuestion questionSoundString]];
 
 }
@@ -406,82 +387,6 @@
     
     CCLOG(@"Picture Locations Established");
     
-}
-
-#pragma mark TEST METHODS
-
-- (void) draw {
-    
-    //[self drawInfoArea];
-    //[self drawPicturesArray:[NSString stringWithFormat:@"%i", _pictureMode]];
-}
-
-- (void) drawInfoArea
-{
-    CCLOG(@"%@", NSStringFromSelector(_cmd));
-    CGRect infoArea = CGRectMake(0, 0, [[CCDirector sharedDirector] winSize].width, 255 * _sizeAdjustmentFactor);
-    [self drawRectFromRect:infoArea withColors:[_randomColorArray objectAtIndex:0]];
-}
-
-- (void) drawPicturesArray:(NSString *)num
-{
-    NSArray *array = [_picArraysByNumber objectForKey:num];
-    
-    for (int i = 0; i < [array count]; i++) {
-        CGRect rect = [[array objectAtIndex:i] CGRectValue];
-        NSArray *colors = [_randomColorArray objectAtIndex:i + 1];
-        
-        [self drawRectFromRect:rect withColors:colors];
-        
-    }
-}
-
-// TODO: Create arrays of non-random colors that fit themes: shades of blue, shades of orange, shades of green, etc.
-- (void) createRandomColors
-{
-    // Set up random color array for testing
-    _randomColorArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 60; i++) {
-        NSArray *arr = [NSArray arrayWithObjects:
-                        [NSNumber numberWithInt:arc4random() % 255],
-                        [NSNumber numberWithInt:arc4random() % 255],
-                        [NSNumber numberWithInt:arc4random() % 255],
-                        nil];
-        [_randomColorArray addObject:arr];
-    }
-    CCLOG(@"Random colors created");
-}
-
-- (void) drawCircleAtPoint:(CGPoint)pt withColors:(NSArray *)colors
-{
-    glLineWidth(3);
-    ccDrawColor4B(255, 255, 255, 255);
-    ccDrawCircle(pt, 50, CC_DEGREES_TO_RADIANS(90), 32, NO);
-}
-
-- (void) drawRectFromRect:(CGRect)rect withColors:(NSArray *)colors
-{
-    int col1;
-    int col2;
-    int col3;
-
-    if (!colors) {
-        col1 = 255;
-        col2 = 255;
-        col3 = 255;
-    } else {
-        col1 = [[colors objectAtIndex:0] integerValue];
-        col2 = [[colors objectAtIndex:1] integerValue];
-        col3 = [[colors objectAtIndex:2] integerValue];
-    }
-    
-    // glLineWidth(0); ERROR
-    //ccDrawColor4B(col1,col2,col3,255);
-    
-    ccColor4B c4Bcolor = ccc4(col1, col2, col3, 255);
-    ccColor4F c4Fcolor = ccc4FFromccc4B(c4Bcolor);
-               
-    ccDrawSolidRect(rect.origin, CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height), c4Fcolor);
 }
 
 @end

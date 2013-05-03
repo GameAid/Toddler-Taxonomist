@@ -10,18 +10,25 @@
 #import <GameKit/GameKit.h>
 #import "cocos2d.h"
 
+
 @class MainMenuSlider;
 @class CDSoundSource;
 @class InfoLayer;
 
 @interface MainMenuLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate>
 {
-    
+
 }
 
 @property (retain, nonatomic) CDSoundSource  *themeSong;
 @property (retain, nonatomic) MainMenuSlider *sliderTop;
 @property (retain, nonatomic) MainMenuSlider *sliderBottom;
+
+@property (retain, nonatomic) CCMenuItemImage *easyButton;
+@property (retain, nonatomic) CCMenuItemImage *mediumButton;
+@property (retain, nonatomic) CCMenuItemImage *hardButton;
+
+@property (assign, nonatomic) CGRect difficultyRect;
 
 // returns a CCScene that contains the MainMenuLayer as the only child
 +(CCScene *) scene;

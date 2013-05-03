@@ -22,6 +22,8 @@
         [self setOrganism:org];
         [self setTouchEnabled:YES];
         [self setDescPlaying:NO];
+        
+        // TODO: Remove legacy audio code
         [self setDescSoundId:0];
         
         // The close button
