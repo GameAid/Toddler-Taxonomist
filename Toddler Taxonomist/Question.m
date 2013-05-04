@@ -238,8 +238,6 @@
     }
 }
 
-// TODO: Generate the question first
-
 - (void)generateAnswersForPictureMode:(PictureMode)mode
 {
     CCLOG(@"generating answers for picture mode: %i and difficulty: %i", mode, [self qDifficulty]);

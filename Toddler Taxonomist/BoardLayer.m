@@ -202,6 +202,7 @@
     
     
     if (_showInfoPanel) {
+        
         NSString *orgName = [[[_tiles objectAtIndex:0] organism] specificName];
         CCLabelBMFont *nameLabel = [CCLabelBMFont labelWithString:orgName fntFile:@"audimat_45_white.fnt"];
         nameLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 64);
@@ -211,14 +212,14 @@
         NSString *questionText = [q questionString];
         CCLabelBMFont *questionLabel = [CCLabelBMFont labelWithString:questionText fntFile:@"audimat_36_white.fnt"];
         questionLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 64);
-        [self addChild:questionLabel];
+        [self addChild:questionLabel z:0 tag:7777];
     }
     
     // Set flag to turn on touch enabled
     [self setNeedsTouch:YES];
     
     // Play question audio
-    [[SoundManager manager] playNext:[q questionSoundString] asBackground:NO];
+    [[SoundManager manager] playNext:[q questionSoundString] withUnload:NO];
     
 }
 
@@ -246,6 +247,15 @@
 {
     CGPoint touchLocGL = [self locationFromTouch:[touches anyObject]];
     
+    // CCNode *qtext = [self getChildByTag:7777];
+    CGRect qRect = CGRectMake(0, 0, [CCDirector sharedDirector].winSize.width, 128);
+    
+    if (CGRectContainsPoint(qRect, touchLocGL)) {
+        [[SoundManager manager] playNow:[_activeQuestion questionSoundString] andEmptyQueue:YES withUnload:NO];
+        return;
+    }
+    
+    
     for (int i = 0; i < [_positionArray count]; i++) {
         CGRect rect = [[_positionArray objectAtIndex:i] CGRectValue];
         
@@ -263,6 +273,10 @@
 
 - (void) correctAnswer:(Tile *)tile
 {
+    if (_firstGuess) {
+        [[Settings settings] reportCorrectAt:_activeQuestion.qDifficulty];
+    }    
+    
     [self setTouchEnabled:NO];
     
     float delay;
@@ -276,6 +290,10 @@
 
 - (void) incorrectAnswer:(Tile *)tile
 {
+    if (_firstGuess) {
+        [[Settings settings] reportIncorrectAt:_activeQuestion.qDifficulty];
+    }
+    
     [self setFirstGuess:NO];
     [tile setOpacity:75];
     OrganismDetails *details = [[OrganismDetails alloc] initWithColor:ccc4(0, 0, 0, 255) andOrganism:[tile organism]];
@@ -309,7 +327,7 @@
     [self setTouchEnabled:YES];
     [self removeChildByTag:TagOrganismDetails cleanup:YES];
 
-    [[SoundManager manager] playNow:[_activeQuestion questionSoundString]];
+    [[SoundManager manager] playNow:[_activeQuestion questionSoundString] andEmptyQueue:YES withUnload:NO];
 
 }
 

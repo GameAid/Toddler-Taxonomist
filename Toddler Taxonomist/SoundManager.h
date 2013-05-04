@@ -8,14 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "SimpleAudioEngine.h"
+#import "cocos2d.h"
 
-@interface SoundManager : NSObject
+@interface SoundManager : CCNode
 
 @property (retain, nonatomic) NSString       *playingName;
 @property (retain, nonatomic) CDSoundSource  *playingSource;
 @property (assign, nonatomic) BOOL            isPlayingEffect;
 @property (retain, nonatomic) NSString       *playingBackgroundName;
 @property (retain, nonatomic) NSMutableArray *playQueue;
+@property (retain, nonatomic) NSMutableSet *unloadQueue;
 
 + (SoundManager *)manager;
 
@@ -23,9 +25,11 @@
 - (float)playNext:(NSString *)songName asBackground:(BOOL)bg;
 
 - (float)playNext:(NSString *)songName;
+- (float)playNext:(NSString *)songName withUnload:(BOOL)unload;
 
 // Cancel what's playing and and the queue and play this now.
 - (float)playNow:(NSString *)songName;
+- (float)playNow:(NSString *)songName andEmptyQueue:(BOOL)empty withUnload:(BOOL)unload;
 
 // Stop what's playing -- effects only, not bg
 - (void)stopPlaying;

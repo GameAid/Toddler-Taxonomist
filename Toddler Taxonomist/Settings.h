@@ -31,7 +31,7 @@ typedef enum
 
 - (unsigned short)correctAnswersAt:(QuestionDifficulty)difficulty;
 - (unsigned short)incorrectAnswersAt:(QuestionDifficulty)difficulty;
-- (unsigned short)totalCorrectAt:(QuestionDifficulty)difficulty;
+- (unsigned short)totalQuestionsAt:(QuestionDifficulty)difficulty;
 
 - (unsigned short)totalCorrect;
 - (unsigned short)totalIncorrect;

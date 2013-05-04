@@ -70,22 +70,26 @@ static Settings *sharedSettings;
         case DifficultyEasy:
             [self increment:@"correctEasy"];
             [self increment:@"totalEasy"];
+            CCLOG(@"-- Correct at Easy Difficulty --");
             break;
             
         case DifficultyMedium:
             [self increment:@"correctMedium"];
             [self increment:@"totalMedium"];
+            CCLOG(@"-- Correct at Medium Difficulty --");
             break;
             
         case DifficultyHard:
             [self increment:@"correctHard"];
             [self increment:@"totalHard"];
+            CCLOG(@"-- Correct at Hard Difficulty --");
             break;
             
         default:
             NSLog(@"We shouldn't be here.");
             break;
     }
+    [self log];
 }
 
 - (void)reportIncorrectAt:(QuestionDifficulty)difficulty
@@ -99,22 +103,26 @@ static Settings *sharedSettings;
         case DifficultyEasy:
             [self increment:@"incorrectEasy"];
             [self increment:@"totalEasy"];
+            CCLOG(@"-- Incorrect at Easy Difficulty --");
             break;
             
         case DifficultyMedium:
             [self increment:@"incorrectMedium"];
             [self increment:@"totalMedium"];
+            CCLOG(@"-- Incorrect at Medium Difficulty --");
             break;
             
         case DifficultyHard:
             [self increment:@"incorrectHard"];
             [self increment:@"totalHard"];
+            CCLOG(@"-- Incorrect at Hard Difficulty --");
             break;
             
         default:
             NSLog(@"We shouldn't be here.");
             break;
     }
+    [self log];
 }
 
 - (unsigned short)correctAnswersAt:(QuestionDifficulty)difficulty
@@ -173,7 +181,7 @@ static Settings *sharedSettings;
     return [[_scoreBoard objectForKey:key] unsignedShortValue];
 }
 
-- (unsigned short)totalCorrectAt:(QuestionDifficulty)difficulty
+- (unsigned short)totalQuestionsAt:(QuestionDifficulty)difficulty
 {
     NSString *key;
     
@@ -224,6 +232,21 @@ static Settings *sharedSettings;
 - (unsigned short)incorrectStreak
 {
     return [[_scoreBoard objectForKey:@"incorrectStreak"] unsignedShortValue];
+}
+
+- (void) log
+{
+    CCLOG(@"======================= SCORE ==========================");
+    CCLOG(@"Total Questions: %i", [self totalQuestions]);
+    CCLOG(@"Total Correct:   %i", [self totalCorrect]);
+    CCLOG(@"Total Incorrect: %i", [self totalIncorrect]);
+    CCLOG(@"Correct streak:  %i", [self correctStreak]);
+    CCLOG(@"Incorrect streak:%i", [self incorrectStreak]);
+    
+    CCLOG(@"Easy:   %i/%i", [self correctAnswersAt:DifficultyEasy],   [self totalQuestionsAt:DifficultyEasy]);
+    CCLOG(@"Medium: %i/%i", [self correctAnswersAt:DifficultyMedium], [self totalQuestionsAt:DifficultyMedium]);
+    CCLOG(@"Hard:   %i/%i", [self correctAnswersAt:DifficultyHard],   [self totalQuestionsAt:DifficultyHard]);
+    CCLOG(@"======================= END SCORE ======================");
 }
 
 @end

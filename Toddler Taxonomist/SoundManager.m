@@ -28,7 +28,14 @@ static SoundManager *manager;
     self = [super init];
     if (self) {
         _playQueue = [[NSMutableArray alloc] init];
+        _unloadQueue = [[NSMutableSet alloc] init];
         [self setIsPlayingEffect:NO];
+        // [self scheduleUpdate];
+        //[self schedule:@selector(emptyUnloadQueue:) interval:3.0f];
+        
+        [[[CCDirector sharedDirector] scheduler] resumeTarget:self];
+        [[[CCDirector sharedDirector] scheduler] scheduleSelector:@selector(emptyUnloadQueue:) forTarget:self interval:45.0 paused:NO];
+        
     }
     return self;
 }
@@ -38,7 +45,17 @@ static SoundManager *manager;
     return [self playNext:songName asBackground:NO];
 }
 
+- (float)playNext:(NSString *)songName withUnload:(BOOL)unload
+{
+    return [self playNext:songName asBackground:NO withUnload:unload];
+}
+
 - (float)playNext:(NSString *)songName asBackground:(BOOL)bg
+{
+    return [self playNext:songName asBackground:bg withUnload:YES];
+}
+
+- (float)playNext:(NSString *)songName asBackground:(BOOL)bg withUnload:(BOOL)unload
 {
     // Handle background music
     if (bg) {
@@ -60,7 +77,7 @@ static SoundManager *manager;
     
     // Handle effects
     if (_isPlayingEffect) {
-        CCLOG(@"playNext - on queue: %@", songName);
+        // CCLOG(@"playNext - on queue: %@", songName);
         CDSoundSource *src = [[SimpleAudioEngine sharedEngine] soundSourceForFile:songName];
         length = [src durationInSeconds];
         
@@ -70,8 +87,8 @@ static SoundManager *manager;
         
     } else {
         // Play it now
-        CCLOG(@"playNext - now: %@", songName);
-        length = [self playNow:songName];
+        // CCLOG(@"playNext - now: %@", songName);
+        length = [self playNow:songName andEmptyQueue:YES withUnload:unload];
     }
     
     return length;
@@ -80,10 +97,15 @@ static SoundManager *manager;
 
 - (float)playNow:(NSString *)songName
 {
-    return [self playNow:songName andEmptyQueue:YES];
+    return [self playNow:songName andEmptyQueue:YES withUnload:YES];
 }
 
 - (float)playNow:(NSString *)songName andEmptyQueue:(BOOL)empty
+{
+    return [self playNow:songName andEmptyQueue:empty withUnload:YES];
+}
+
+- (float)playNow:(NSString *)songName andEmptyQueue:(BOOL)empty withUnload:(BOOL)unload
 {
     [self stopPlaying];
     
@@ -100,17 +122,16 @@ static SoundManager *manager;
     
     _isPlayingEffect      = YES;
     
-    [self performSelector:@selector(nextInQueue) withObject:nil afterDelay:duration];
+    [self performSelector:@selector(nextInQueueWithUnload:) withObject:[NSNumber numberWithBool:unload] afterDelay:duration];
     
     return duration;
 }
 
 
-
 - (void)stopPlaying
 {
     if (_isPlayingEffect) {
-        CCLOG(@"Stopping %@", _playingName);
+        // CCLOG(@"Stopping %@", _playingName);
         
         [SoundManager cancelPreviousPerformRequestsWithTarget:self];
         
@@ -125,7 +146,7 @@ static SoundManager *manager;
 
 - (void)fadeEffect
 {
-    CCLOG(@"Fading Source: %@", _playingSource.description);
+    // CCLOG(@"Fading Source: %@", _playingSource.description);
 
     // Fade out the theme song -- what happens if it isn't playing?
     [CDXPropertyModifierAction fadeSoundEffect:1.0f
@@ -143,16 +164,24 @@ static SoundManager *manager;
 
 
 
-- (void)nextInQueue
+- (void)nextInQueueWithUnload:(NSNumber *)doUnload
 {
-    CCLOG(@"Finishing: %@", _playingName);
+    CCLOG(@"Finishing: %@ unload: %@", _playingName, doUnload.boolValue ? @"YES" : @"NO");
+    
+    if (!doUnload.boolValue) {
+        [_unloadQueue addObject:[_playingName copy]];
+    }
     
     // There's nothing in the queue, so clear stuff out
     if ([_playQueue count] == 0) {
-        CCLOG(@"Nothing in the effect queue");
+        // CCLOG(@"Nothing in the effect queue");
         
         _isPlayingEffect = NO;
-        [self unload:[_playingName copy]];
+        
+        if (doUnload.boolValue) {
+            [self unload:[_playingName copy]];
+        }
+        
         _playingName = @"";
         _playingSource = nil;
         return;
@@ -161,7 +190,9 @@ static SoundManager *manager;
     // There is something in the queue
     
     // Unload the last effect
-    [self unload:[_playingName copy]];
+    if (doUnload.boolValue) {
+        [self unload:[_playingName copy]];
+    }
     
     _isPlayingEffect = NO;
     
@@ -169,18 +200,32 @@ static SoundManager *manager;
     _playingName = [_playQueue objectAtIndex:0];
     
     // Play the sound
-    [self playNow:_playingName andEmptyQueue:NO];
+    [self playNow:_playingName andEmptyQueue:NO withUnload:doUnload.boolValue];
     
     // Remove from the queue the sound that was just sent to play
     [_playQueue removeObjectAtIndex:0];
 
 }
 
+- (void) emptyUnloadQueue:(ccTime)dt
+{
+    CCLOG(@"Emptying the unload queue:");
+    for (NSString *sound in _unloadQueue) {
+        
+        if ([_playingName isEqualToString:sound]) {
+            continue;
+        }
+        
+        CCLOG(@"..... %@", sound);
+        [[SimpleAudioEngine sharedEngine] unloadEffect:sound];
+        [_unloadQueue removeObject:sound];
+    }
+}
 
 - (void)unload:(NSString *)songName
 {
-    CCLOG(@"Unloading %@", songName);
-    [[SimpleAudioEngine sharedEngine] performSelector:@selector(unloadEffect:) withObject:songName afterDelay:0.5f];
+    // CCLOG(@"Unloading %@", songName);
+    [[SimpleAudioEngine sharedEngine] performSelector:@selector(unloadEffect:) withObject:songName afterDelay:2.0f];
 }
 
 
