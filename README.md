@@ -4,9 +4,9 @@ Toddler Taxonomist is an iPad app designed to entertain young children while hel
 
 Toddler Taxonomist and its source are developed and released by [GameAid](http://www.gameaid.org), a new non-profit initiative in the process of applying for 501(c)3 status. Please visit [http://www.gameaid.org](http://www.gameaid.org) for more information.
 
-Toddler Taxonomist by GameAid is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>. 
+Toddler Taxonomist by GameAid is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License.
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
 
 -------
 
