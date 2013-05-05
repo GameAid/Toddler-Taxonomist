@@ -17,7 +17,7 @@
 @property (assign, nonatomic) BOOL            isPlayingEffect;
 @property (retain, nonatomic) NSString       *playingBackgroundName;
 @property (retain, nonatomic) NSMutableArray *playQueue;
-@property (retain, nonatomic) NSMutableSet *unloadQueue;
+@property (retain, nonatomic) NSMutableArray *unloadQueue;
 
 + (SoundManager *)manager;
 

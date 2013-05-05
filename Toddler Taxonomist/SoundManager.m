@@ -28,12 +28,12 @@ static SoundManager *manager;
     self = [super init];
     if (self) {
         _playQueue = [[NSMutableArray alloc] init];
-        _unloadQueue = [[NSMutableSet alloc] init];
+        _unloadQueue = [[NSMutableArray alloc] init];
         [self setIsPlayingEffect:NO];
         // [self scheduleUpdate];
         //[self schedule:@selector(emptyUnloadQueue:) interval:3.0f];
         
-        [[[CCDirector sharedDirector] scheduler] resumeTarget:self];
+        // [[[CCDirector sharedDirector] scheduler] resumeTarget:self];
         [[[CCDirector sharedDirector] scheduler] scheduleSelector:@selector(emptyUnloadQueue:) forTarget:self interval:45.0 paused:NO];
         
     }
@@ -131,13 +131,13 @@ static SoundManager *manager;
 - (void)stopPlaying
 {
     if (_isPlayingEffect) {
-        // CCLOG(@"Stopping %@", _playingName);
-        
+
         [SoundManager cancelPreviousPerformRequestsWithTarget:self];
         
         [_playingSource stop];
         
-        [self unload:[_playingName copy]];
+        [_unloadQueue addObject:[_playingName copy]];
+        
         _playingName   = @"";
         _playingSource = nil;
         _isPlayingEffect = NO;
@@ -159,7 +159,8 @@ static SoundManager *manager;
     _playingSource   = nil;
     _isPlayingEffect = NO;
     
-    [self performSelector:@selector(unload:) withObject:[_playingName copy] afterDelay:3.0f];
+    // [self performSelector:@selector(unload:) withObject:[_playingName copy] afterDelay:3.0f];
+    [_unloadQueue addObject:[_playingName copy]];
 }
 
 
@@ -168,6 +169,7 @@ static SoundManager *manager;
 {
     CCLOG(@"Finishing: %@ unload: %@", _playingName, doUnload.boolValue ? @"YES" : @"NO");
     
+    // TODO: Remove doUnload -- unnecessary if we add everything to the unload queue
     if (!doUnload.boolValue) {
         [_unloadQueue addObject:[_playingName copy]];
     }
@@ -179,7 +181,7 @@ static SoundManager *manager;
         _isPlayingEffect = NO;
         
         if (doUnload.boolValue) {
-            [self unload:[_playingName copy]];
+            [_unloadQueue addObject:[_playingName copy]];
         }
         
         _playingName = @"";
@@ -191,7 +193,7 @@ static SoundManager *manager;
     
     // Unload the last effect
     if (doUnload.boolValue) {
-        [self unload:[_playingName copy]];
+        [_unloadQueue addObject:[_playingName copy]];
     }
     
     _isPlayingEffect = NO;
@@ -210,15 +212,17 @@ static SoundManager *manager;
 - (void) emptyUnloadQueue:(ccTime)dt
 {
     CCLOG(@"Emptying the unload queue:");
-    for (NSString *sound in _unloadQueue) {
+    for (int i = 0; i < _unloadQueue.count; i++) {
+        
+        NSString *sound = [_unloadQueue objectAtIndex:i];
         
         if ([_playingName isEqualToString:sound]) {
             continue;
         }
         
         CCLOG(@"..... %@", sound);
-        [[SimpleAudioEngine sharedEngine] unloadEffect:sound];
         [_unloadQueue removeObject:sound];
+        [[SimpleAudioEngine sharedEngine] unloadEffect:sound];
     }
 }
 
