@@ -56,16 +56,17 @@
 	switch (targetScene_)
 	{
 		case TargetSceneMainMenuScene:
-			[[CCDirector sharedDirector] replaceScene:[MainMenuLayer scene]];
-			break;
+        {
+            CCTransitionFade* transition = [CCTransitionFade transitionWithDuration:1 scene:[MainMenuLayer scene] withColor:ccBLACK];
+			[[CCDirector sharedDirector] replaceScene:transition];
+            break;
+        }
+
 		case TargetSceneBoardScene:
-            // Important note: if you create new local variables within a case block, it must be put in brackets.
-            // Otherwise you'll receive a compilation error "Expected expression before ..."
 		{
             
 			CCTransitionFade* transition = [CCTransitionFade transitionWithDuration:1 scene:[BoardLayer scene] withColor:ccBLACK];
 			[[CCDirector sharedDirector] replaceScene:transition];
-            CCLOG(@"Switched scenes");
 			break;
 		}
 			
@@ -75,12 +76,7 @@
 			NSAssert2(nil, @"%@: unsupported TargetScene %i", NSStringFromSelector(_cmd), targetScene_);
 			break;
 	}
-	
-	// Tip: example usage of the INVALID and MAX enum values to iterate over all enum values
-	/*
-    for (TargetScenes i = TargetSceneINVALID + 1; i < TargetSceneMAX; i++)
-	{
-	} */
+
 }
 
 -(void) dealloc

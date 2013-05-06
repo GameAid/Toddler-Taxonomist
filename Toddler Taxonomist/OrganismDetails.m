@@ -29,16 +29,7 @@
         // The close button
         CCMenuItemImage *closeButton = [CCMenuItemImage itemWithNormalImage:@"close.png"
                                                               selectedImage:@"close-dark.png"
-                                                                      block:^(id sender) {
-                                                                          
-                                                  if (_descPlaying) {
-                                                      [[SimpleAudioEngine sharedEngine] stopEffect:_descSoundId];
-                                                      _descSoundId = NO;
-                                                      [[SimpleAudioEngine sharedEngine] unloadEffect:[_organism sound_description]];
-                                                  }
-                                                  [[self boardLayer] closeDetails];
-                                                                          
-                                                                      }];
+                                                                      block:^(id sender) { [self closeLayer]; }];
         [closeButton setAnchorPoint:ccp(1, 0)];
         CCMenu *menu = [CCMenu menuWithItems:closeButton, nil];
         [menu setPosition:ccp([[CCDirector sharedDirector] winSize].width, 0)];
@@ -108,13 +99,13 @@
         CCSprite *finger2 = [CCSprite spriteWithFile:@"finger.png"];
         [finger2 setAnchorPoint:ccp(0,0.5)];
         [finger2 setPosition:ccp(nameLabel.position.x + 5 + (nameLabel.contentSize.width * 0.5), nameLabel.position.y)];
-        [self addChild:finger2 z:12 tag:12121];
+        [self addChild:finger2 z:12 tag:12122];
         
         CCSprite *finger3 = [CCSprite spriteWithFile:@"finger.png"];
         [finger3 setAnchorPoint:ccp(0,0.5)];
         [finger3 setScale:0.6f];
         [finger3 setPosition:ccp(scientificName.position.x + 5 + (scientificName.contentSize.width * 0.5), scientificName.position.y)];
-        [self addChild:finger3 z:12 tag:12121];
+        [self addChild:finger3 z:12 tag:12123];
         
     }
     return self;
@@ -140,27 +131,45 @@
     CGPoint touchLocGL = [self locationFromTouch:[touches anyObject]];
 
     // Long description
-    if (CGRectContainsPoint([self getChildByTag:8675].boundingBox, touchLocGL)) {
+    if (CGRectContainsPoint([self getChildByTag:8675].boundingBox, touchLocGL) || CGRectContainsPoint([self getChildByTag:12121].boundingBox, touchLocGL)) {
         if (_descPlaying) {
             [[SoundManager manager] stopPlaying];
             [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.25f];
             _descPlaying = NO;
+            return;
         } else {
             [[SoundManager manager] playNext:[_organism sound_description] withUnload:NO];
             [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.1f];
             _descPlaying = YES;
+            return;
         }
     }
     
     // Specific Name
-    if (CGRectContainsPoint([self getChildByTag:8787].boundingBox, touchLocGL)) {
+    if (CGRectContainsPoint([self getChildByTag:8787].boundingBox, touchLocGL)|| CGRectContainsPoint([self getChildByTag:12122].boundingBox, touchLocGL)) {
         [[SoundManager manager] playNow:[_organism sound_thats_specific] andEmptyQueue:YES withUnload:NO];
+        return;
     }
     
     // Scientific Name
-    if (CGRectContainsPoint([self getChildByTag:8888].boundingBox, touchLocGL)) {
+    if (CGRectContainsPoint([self getChildByTag:8888].boundingBox, touchLocGL)|| CGRectContainsPoint([self getChildByTag:12123].boundingBox, touchLocGL)) {
         [[SoundManager manager] playNow:[_organism sound_thats_scientific] andEmptyQueue:YES withUnload:NO];
+        return;
     }
+    
+    // Touched anywhere else:
+    [self closeLayer];
+    
+}
+
+- (void) closeLayer
+{
+    if (_descPlaying) {
+        [[SimpleAudioEngine sharedEngine] stopEffect:_descSoundId];
+        _descSoundId = NO;
+        [[SimpleAudioEngine sharedEngine] unloadEffect:[_organism sound_description]];
+    }
+    [[self boardLayer] closeDetails];
 }
 
 

@@ -102,6 +102,10 @@
         [self setFirstGuess:YES];
         [self setQuestionWithDifficulty:difficulty orQuestion:nil];
         [self scheduleUpdate];
+        
+        
+        
+        
     }
     return self;
 }
