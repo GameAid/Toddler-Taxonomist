@@ -247,6 +247,40 @@ static Settings *sharedSettings;
     CCLOG(@"Medium: %i/%i", [self correctAnswersAt:DifficultyMedium], [self totalQuestionsAt:DifficultyMedium]);
     CCLOG(@"Hard:   %i/%i", [self correctAnswersAt:DifficultyHard],   [self totalQuestionsAt:DifficultyHard]);
     CCLOG(@"======================= END SCORE ======================");
+    
+    NSDictionary *userDict;
+    
+    switch ([self correctStreak]) {
+        case 5:
+            userDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:5], @"correctStreak", nil];
+            break;
+            
+        case 10:
+            userDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:10], @"correctStreak", nil];
+            break;
+            
+        case 20:
+            userDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:20], @"correctStreak", nil];
+            break;
+            
+        case 30:
+            userDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:30], @"correctStreak", nil];
+            break;
+            
+        case 40:
+            userDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:40], @"correctStreak", nil];
+            break;
+            
+        case 50:
+            userDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:50], @"correctStreak", nil];
+            break;
+            
+        default:
+            return;
+            break;
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"correctStreak" object:nil userInfo:userDict];
 }
 
 @end

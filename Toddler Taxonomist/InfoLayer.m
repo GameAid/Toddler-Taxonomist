@@ -59,7 +59,7 @@
     closeLabel.position    = ccpSub(aboutLabel.position, ccp(0,[aboutLabel contentSize].height));
     [self addChild:closeLabel];
     
-    NSString *about = @"Toddler Taxonomist was created by Clay Heaton for two reasons. First, to entertain his daughters. Second, to support GameAid, a new initiative that supports the creation of games about environmental conservation and public health.\n\nPlease report improperly pronounced scientific names, preferably with an attached audio clip demonstrating the correct pronunciation. Thanks!\n\nFor more information:\nWeb: www.GameAid.org\nEmail: info@gameaid.org\nTwitter: @GameAid\nFacebook: www.facebook.com/GameAid\n\nCredits:\nProgramming: Clay Heaton\nVoiceover: Clay Heaton\nPhotography: See the list to the right -------->\nMain Menu Music: Clay & Blythe Heaton\n\nGameplay music by N. Cameron Britt\nwww.ncameronbritt.com\nTwitter: @NCameronBritt\n\nAll science info and text from Wikipedia.";
+    NSString *about = @"Toddler Taxonomist was created by Clay Heaton to entertain his daughters and to support GameAid, a new initiative to create games about environmental conservation and public health. All science info and text from Wikipedia.\n\nPlease report improperly pronounced scientific names, preferably with an attached audio clip demonstrating the correct pronunciation. Thanks!\n\nFor more information:\nWeb: www.GameAid.org\nEmail: info@gameaid.org\nTwitter: @GameAid\nFacebook: www.facebook.com/GameAid\n\nCredits:\nProgramming: Clay Heaton\nVoiceover: Clay Heaton\nPhotography: See the list to the right -------->\nMain Menu Music: Clay & Blythe Heaton\n\nGameplay music by N. Cameron Britt\nwww.ncameronbritt.com\nTwitter: @NCameronBritt\n\nOne Finger Single Tap icon designed by Scott Lewis from The Noun Project.";
     
     CCLabelBMFont *aboutText = [CCLabelBMFont labelWithString:about
                                                       fntFile:@"audimat_20_white.fnt"
@@ -69,6 +69,8 @@
     aboutText.position    = ccpSub(closeLabel.position, ccp(0, [closeLabel contentSize].height + 15));
     [self addChild:aboutText];
     
+    
+    
     CCLabelBMFont *cocos = [CCLabelBMFont labelWithString:@"Made with cocos2d" fntFile:@"audimat_24_white.fnt"];
     CCSprite *cocosSprite = [CCSprite spriteWithFile:@"cocos.png"];
     [cocosSprite addChild:cocos];
@@ -76,7 +78,17 @@
     cocos.anchorPoint       = ccp(0,0.5f);
     cocos.position          = ccp(cocosSprite.contentSize.width + 5,cocosSprite.contentSize.height * 0.5);
     cocosSprite.position    = ccp(15,45); // ccpSub(aboutText.position, ccp(0,aboutText.contentSize.height + cocosSprite.contentSize.height));
+    cocosSprite.scale       = 0.5f;
+    cocos.scale             = 1.5f;
     [self addChild:cocosSprite];
+    
+    /* Removed because I'm too lazy to edit the image to remove antialiasing.
+     
+    CCSprite *cocosLogo = [CCSprite spriteWithFile:@"cocos-official.png"];
+    cocosLogo.position    = ccp(10,10);
+    cocosLogo.anchorPoint = ccp(0,0);
+    [self addChild:cocosLogo];
+     */
     
     [[AnimalCatalogue animalCatalogue] resetCatalogue];
     

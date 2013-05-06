@@ -45,29 +45,29 @@
         // Initialize sound arrays
         // Load sounds
         _soundsCorrect   = [NSArray arrayWithObjects:
-                            [[NSBundle mainBundle] pathForResource:@"correct_1" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_2" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_3" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_4" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_5" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_6" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_7" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_8" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_9" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"correct_10" ofType:@"mp3"],
+                            @"correct_1.mp3",
+                            @"correct_2.mp3",
+                            @"correct_3.mp3",
+                            @"correct_4.mp3",
+                            @"correct_5.mp3",
+                            @"correct_6.mp3",
+                            @"correct_7.mp3",
+                            @"correct_8.mp3",
+                            @"correct_9.mp3",
+                            @"correct_10.mp3",
                             nil];
         
         _soundsIncorrect = [NSArray arrayWithObjects:
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_1" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_2" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_3" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_4" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_5" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_6" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_7" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_8" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_9" ofType:@"mp3"],
-                            [[NSBundle mainBundle] pathForResource:@"incorrect_10" ofType:@"mp3"],
+                            @"incorrect_1.mp3",
+                            @"incorrect_2.mp3",
+                            @"incorrect_3.mp3",
+                            @"incorrect_4.mp3",
+                            @"incorrect_5.mp3",
+                            @"incorrect_6.mp3",
+                            @"incorrect_7.mp3",
+                            @"incorrect_8.mp3",
+                            @"incorrect_9.mp3",
+                            @"incorrect_10.mp3",
                             nil];
         
         for (NSString *str in _soundsCorrect) {
@@ -84,8 +84,20 @@
         // Default difficulty mode
         QuestionDifficulty difficulty = [[[[Settings settings] boardSettings] objectForKey:@"boardStartDifficulty"] intValue];
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetPicMode:)       name:@"setPictureMode"    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(delayFlagUpdateTextures:) name:@"clearTextureCache" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(resetPicMode:)
+                                                     name:@"setPictureMode"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(delayFlagUpdateTextures:)
+                                                     name:@"clearTextureCache"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(announceCorrectStreak:)
+                                                     name:@"correctStreak"
+                                                   object:nil];
         
         [self setFirstGuess:YES];
         [self setQuestionWithDifficulty:difficulty orQuestion:nil];
@@ -93,6 +105,15 @@
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark Correct Streak Celebrations
+
+- (void) announceCorrectStreak:(NSNotification *)notification
+{
+    CCLOG(@"announceCorrectStreak of %i in BoardLayer", [[[notification userInfo] objectForKey:@"correctStreak"] intValue]);
+}
+
 
 - (void) delayFlagUpdateTextures:(NSNotification *)notification
 {
@@ -139,6 +160,7 @@
     Question *q;
     
     if (!newQuestion) {
+        NSAssert(qd != DifficultyINVALID, @"There is no newQuestion and question difficulty is Invalid");
         q = [[Question alloc] initWithDifficultyMode:qd];
     } else {
         q = newQuestion;
@@ -213,6 +235,12 @@
         CCLabelBMFont *questionLabel = [CCLabelBMFont labelWithString:questionText fntFile:@"audimat_36_white.fnt"];
         questionLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 64);
         [self addChild:questionLabel z:0 tag:7777];
+        
+        CCSprite *finger = [CCSprite spriteWithFile:@"finger.png"];
+        [finger setAnchorPoint:ccp(0,0.5)];
+        [finger setPosition:ccp(questionLabel.position.x + 5 + (questionLabel.contentSize.width * 0.5), questionLabel.position.y)];
+        [self addChild:finger z:0 tag:12121];
+        
     }
     
     // Set flag to turn on touch enabled
@@ -227,7 +255,7 @@
 {
     [[AnimalCatalogue animalCatalogue] resetCatalogue];
     Question *newQ = [[Question alloc] initContinuingFromQuestion:[self activeQuestion] correctOnFirstGuess:[self firstGuess]];
-    [self setQuestionWithDifficulty:nil orQuestion:newQ];
+    [self setQuestionWithDifficulty:DifficultyINVALID orQuestion:newQ];
 }
 
 #pragma mark Touch events

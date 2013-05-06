@@ -14,11 +14,11 @@
 	<array>
 		<string>Icon.png</string>
 		<string>Icon@2x.png</string>
-		<string>72x72_head.png</string>
+		<string>Icon-ipad.png</string>
 		<string>Icon-Small-50.png</string>
 		<string>Icon-Small.png</string>
 		<string>Icon-Small@2x.png</string>
-		<string>144x144_head.png</string>
+		<string>Icon-ipad@2x.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -28,18 +28,16 @@
 			<array>
 				<string>Icon.png</string>
 				<string>Icon@2x.png</string>
-				<string>72x72_head.png</string>
+				<string>Icon-ipad.png</string>
 				<string>Icon-Small-50.png</string>
 				<string>Icon-Small.png</string>
 				<string>Icon-Small@2x.png</string>
-				<string>144x144_head.png</string>
+				<string>Icon-ipad@2x.png</string>
 			</array>
-			<key>UIPrerenderedIcon</key>
-			<true/>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.theperiheliongroup.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.theperiheliongroup.Toddler-Taxonomist</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -53,8 +51,6 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<dict>

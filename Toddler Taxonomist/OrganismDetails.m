@@ -56,14 +56,20 @@
         [self addChild:orgPic z:10 tag:99];
         
         
+        
+        
         CCLabelBMFont *nameLabel = [CCLabelBMFont labelWithString:[_organism specificName] fntFile:@"audimat_45_white.fnt"];
         nameLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 64);
-        [self addChild:nameLabel];
+        [self addChild:nameLabel z:10 tag:8787];
 
+        
+        
         
         CCLabelBMFont *scientificName = [CCLabelBMFont labelWithString:[_organism scientificName] fntFile:@"audimat_24_white_italic.fnt"];
         scientificName.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5,32);
         [self addChild:scientificName z:10 tag:8888];
+        
+        
         
         CCLabelBMFont *descriptiveText = [CCLabelBMFont labelWithString:[_organism organismDescription]
                                                                 fntFile:@"audimat_24_white.fnt"
@@ -74,6 +80,8 @@
         
         descriptiveText.anchorPoint = ccp(0,1);
         [self addChild:descriptiveText z:12 tag:8675];
+        
+        
         
         CCLabelTTF *imageSourceLabel = [CCLabelTTF labelWithString:[_organism photoCredit] fontName:[[UIFont systemFontOfSize:12] fontName] fontSize:12];
         imageSourceLabel.color = ccc3(180, 180,180);
@@ -91,6 +99,22 @@
         info.position = ccp(descriptiveText.position.x,128);
         info.anchorPoint = ccp(0,0);
         [self addChild:info z:12 tag:9999];
+        
+        CCSprite *finger = [CCSprite spriteWithFile:@"finger.png"];
+        [finger setAnchorPoint:ccp(1,1)];
+        [finger setPosition:ccpSub(descriptiveText.position, ccp(2,0))];
+        [self addChild:finger z:12 tag:12121];
+        
+        CCSprite *finger2 = [CCSprite spriteWithFile:@"finger.png"];
+        [finger2 setAnchorPoint:ccp(0,0.5)];
+        [finger2 setPosition:ccp(nameLabel.position.x + 5 + (nameLabel.contentSize.width * 0.5), nameLabel.position.y)];
+        [self addChild:finger2 z:12 tag:12121];
+        
+        CCSprite *finger3 = [CCSprite spriteWithFile:@"finger.png"];
+        [finger3 setAnchorPoint:ccp(0,0.5)];
+        [finger3 setScale:0.6f];
+        [finger3 setPosition:ccp(scientificName.position.x + 5 + (scientificName.contentSize.width * 0.5), scientificName.position.y)];
+        [self addChild:finger3 z:12 tag:12121];
         
     }
     return self;
@@ -114,10 +138,9 @@
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint touchLocGL = [self locationFromTouch:[touches anyObject]];
-    CCLabelBMFont *info = (CCLabelBMFont *)[self getChildByTag:8675];
-    CGRect  descAreaRect = CGRectMake(info.position.x, info.position.y - info.contentSize.height, info.contentSize.width, info.contentSize.height);
-    
-    if (CGRectContainsPoint(descAreaRect, touchLocGL)) {
+
+    // Long description
+    if (CGRectContainsPoint([self getChildByTag:8675].boundingBox, touchLocGL)) {
         if (_descPlaying) {
             [[SoundManager manager] stopPlaying];
             _descPlaying = NO;
@@ -125,6 +148,16 @@
             [[SoundManager manager] playNext:[_organism sound_description]];
             _descPlaying = YES;
         }
+    }
+    
+    // Specific Name
+    if (CGRectContainsPoint([self getChildByTag:8787].boundingBox, touchLocGL)) {
+        [[SoundManager manager] playNow:[_organism sound_thats_specific] andEmptyQueue:YES withUnload:NO];
+    }
+    
+    // Scientific Name
+    if (CGRectContainsPoint([self getChildByTag:8888].boundingBox, touchLocGL)) {
+        [[SoundManager manager] playNow:[_organism sound_thats_scientific] andEmptyQueue:YES withUnload:NO];
     }
 }
 

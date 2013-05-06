@@ -216,7 +216,7 @@ static AnimalCatalogue *sharedAnimalCatalogue;
     }
     
     
-    QuestionType qt;
+    QuestionType qt = QuestionTypeSpecificName;
     int extraTiles = 0;
     
     switch (qd) {
