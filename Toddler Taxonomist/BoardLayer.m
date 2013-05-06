@@ -356,6 +356,7 @@
     [self removeChildByTag:TagOrganismDetails cleanup:YES];
 
     [[SoundManager manager] playNow:[_activeQuestion questionSoundString] andEmptyQueue:YES withUnload:NO];
+    [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.25f];
 
 }
 

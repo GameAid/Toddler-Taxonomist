@@ -68,8 +68,9 @@ static SoundManager *manager;
         
         _playingBackgroundName = songName;
         
+        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.25f];
+        
         [[SimpleAudioEngine sharedEngine] performSelector:@selector(playBackgroundMusic:) withObject:_playingBackgroundName afterDelay:1.0f];
-        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.5f];
         return 0.0f;
     }
     

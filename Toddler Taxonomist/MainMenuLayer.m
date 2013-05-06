@@ -137,7 +137,7 @@ static QuestionDifficulty _startDifficulty;
                     [self getChildByTag:1123].visible = NO;
         
                     [[SoundManager manager] fadeEffect];
-                    [[SoundManager manager] playNext:@"GameLoop.mp3" asBackground:YES];
+                    [[SoundManager manager] playNext:@"GameLoopNew.mp3" asBackground:YES];
                 
                                                                       
                     CCScene *gameScene = [LoadingScene sceneWithTargetScene:TargetSceneBoardScene];

@@ -143,9 +143,11 @@
     if (CGRectContainsPoint([self getChildByTag:8675].boundingBox, touchLocGL)) {
         if (_descPlaying) {
             [[SoundManager manager] stopPlaying];
+            [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.25f];
             _descPlaying = NO;
         } else {
-            [[SoundManager manager] playNext:[_organism sound_description]];
+            [[SoundManager manager] playNext:[_organism sound_description] withUnload:NO];
+            [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.1f];
             _descPlaying = YES;
         }
     }

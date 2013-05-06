@@ -108,7 +108,8 @@
             
             [[AnimalCatalogue animalCatalogue] resetUsedOrganisms];
             
-            if ([oldQuestion qDifficulty] == DifficultyExtreme) {
+            if ([oldQuestion qDifficulty] == DifficultyHard) { // Change to DifficultyExtreme when implemented
+                CCLOG(@"Can't bump up the difficulty.");
                 // At extreme difficulty with 40 pictures -- keep it the same
                 [self setQPicMode:[oldQuestion qPicMode]];
                 [self setQDifficulty:[oldQuestion qDifficulty]];
