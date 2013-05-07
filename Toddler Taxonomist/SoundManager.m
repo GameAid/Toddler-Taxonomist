@@ -128,10 +128,11 @@ static SoundManager *manager;
     return duration;
 }
 
-- (void)playConcurrent:(NSString *)soundName
+- (ALuint)playConcurrent:(NSString *)soundName
 {
-    [[SimpleAudioEngine sharedEngine] playEffect:soundName];
+    ALuint soundID = [[SimpleAudioEngine sharedEngine] playEffect:soundName];
     [_unloadQueue addObject:[soundName copy]];
+    return soundID;
 }
 
 
@@ -148,6 +149,13 @@ static SoundManager *manager;
         _playingName   = @"";
         _playingSource = nil;
         _isPlayingEffect = NO;
+    }
+}
+
+- (void)stopPlaying:(ALuint)soundID
+{
+    if (soundID > 0) {
+        [[SimpleAudioEngine sharedEngine] stopEffect:soundID];
     }
 }
 

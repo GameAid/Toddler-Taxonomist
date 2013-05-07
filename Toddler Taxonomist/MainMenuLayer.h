@@ -15,11 +15,14 @@
 @class CDSoundSource;
 @class InfoLayer;
 
+typedef unsigned int ALuint;
+
 @interface MainMenuLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate>
 {
 
 }
 
+@property (assign, readwrite)       ALuint    difficultySound;
 @property (retain, nonatomic) CDSoundSource  *themeSong;
 @property (retain, nonatomic) MainMenuSlider *sliderTop;
 @property (retain, nonatomic) MainMenuSlider *sliderBottom;

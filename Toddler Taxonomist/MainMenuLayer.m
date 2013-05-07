@@ -41,6 +41,8 @@ static QuestionDifficulty _startDifficulty;
     self = [super init];
 	if( (self) ) {
         
+        _difficultySound = 0;
+        
         [self setTouchEnabled:YES];
         _startDifficulty = DifficultyEasy;
         
@@ -49,6 +51,7 @@ static QuestionDifficulty _startDifficulty;
         [self createButtons];
         [self createSliders];
         [self scheduleUpdate];
+        
         
         [[SoundManager manager] playNext:@"ThemeSong_v2.mp3" asBackground:NO];
         
@@ -213,6 +216,8 @@ static QuestionDifficulty _startDifficulty;
 
 - (void) changeDifficulty:(QuestionDifficulty)difficulty
 {
+    [[SoundManager manager] stopPlaying:_difficultySound];
+    
     switch (difficulty) {
         case DifficultyEasy:
         {
@@ -221,7 +226,7 @@ static QuestionDifficulty _startDifficulty;
             _mediumButton.visible   = NO;
             _easyButton.visible     = YES;
             _startDifficulty        = DifficultyEasy;
-            [[SoundManager manager] playConcurrent:@"difficulty_to_easy.mp3"];
+            _difficultySound = [[SoundManager manager] playConcurrent:@"difficulty_to_easy.mp3"];
             break;
         }
             
@@ -232,7 +237,7 @@ static QuestionDifficulty _startDifficulty;
             _mediumButton.visible   = YES;
             _easyButton.visible     = NO;
             _startDifficulty        = DifficultyMedium;
-            [[SoundManager manager] playConcurrent:@"difficulty_to_medium.mp3"];
+            _difficultySound = [[SoundManager manager] playConcurrent:@"difficulty_to_medium.mp3"];
             break;
         }
             
@@ -243,7 +248,7 @@ static QuestionDifficulty _startDifficulty;
             _mediumButton.visible   = NO;
             _easyButton.visible     = NO;
             _startDifficulty        = DifficultyHard;
-            [[SoundManager manager] playConcurrent:@"difficulty_to_very_hard.mp3"];
+            _difficultySound = [[SoundManager manager] playConcurrent:@"difficulty_to_very_hard.mp3"];
             break;
         }
             
@@ -254,7 +259,7 @@ static QuestionDifficulty _startDifficulty;
             _mediumButton.visible   = NO;
             _easyButton.visible     = YES;
             _startDifficulty        = DifficultyEasy;
-            [[SoundManager manager] playConcurrent:@"difficulty_to_easy.mp3"];
+            _difficultySound = [[SoundManager manager] playConcurrent:@"difficulty_to_easy.mp3"];
             break;
         }
     }

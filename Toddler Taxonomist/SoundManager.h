@@ -31,10 +31,11 @@
 - (float)playNow:(NSString *)songName;
 - (float)playNow:(NSString *)songName andEmptyQueue:(BOOL)empty withUnload:(BOOL)unload;
 
-- (void)playConcurrent:(NSString *)soundName;
+- (ALuint)playConcurrent:(NSString *)soundName;
 
 // Stop what's playing -- effects only, not bg
 - (void)stopPlaying;
+- (void)stopPlaying:(ALuint)soundID;
 
 - (void)stopBackgroundMusic;
 

@@ -12,7 +12,7 @@
 
 @class Question;
 
-typedef unsigned int ALuint;
+// typedef unsigned int ALuint; Defined in MainMenuLayer
 
 typedef enum
 {
