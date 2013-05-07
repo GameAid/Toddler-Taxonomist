@@ -5337,8 +5337,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Taxonomist.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Clay Heaton (EHBZK36A62)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Clay Heaton (EHBZK36A62)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Perihelion Group (F33S68Q5KX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Perihelion Group (F33S68Q5KX)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Toddler Taxonomist/Prefix.pch";
@@ -5353,8 +5353,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F2F7C2D7-79C2-4B87-8033-46C291411D00";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F2F7C2D7-79C2-4B87-8033-46C291411D00";
+				PROVISIONING_PROFILE = "1DE6DD27-CB02-4880-98EE-AAA609404481";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1DE6DD27-CB02-4880-98EE-AAA609404481";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
