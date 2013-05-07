@@ -34,6 +34,8 @@
 // Stop what's playing -- effects only, not bg
 - (void)stopPlaying;
 
+- (void)stopBackgroundMusic;
+
 // Unload this from memory
 - (void)unload:(NSString *)songName;
 

@@ -145,6 +145,12 @@ static SoundManager *manager;
     }
 }
 
+- (void)stopBackgroundMusic
+{
+    [[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
+    [self stopPlaying];
+}
+
 - (void)fadeEffect
 {
     // CCLOG(@"Fading Source: %@", _playingSource.description);

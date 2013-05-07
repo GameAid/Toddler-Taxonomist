@@ -62,6 +62,8 @@ static QuestionDifficulty _startDifficulty;
 
 - (void) onExit
 {
+    [self removeAllChildrenWithCleanup:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super onExit];
 }
 

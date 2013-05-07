@@ -172,5 +172,17 @@
     [[self boardLayer] closeDetails];
 }
 
+- (void) onExit
+{
+    CCLOG(@"[OrganismDetails onExit]");
+    // [self removeFromParentAndCleanup:YES];
+    _boardLayer = nil;
+    [self removeAllChildrenWithCleanup:YES];
+    [self unscheduleAllSelectors];
+    [self unscheduleUpdate];
+    
+    [super onExit];
+}
+
 
 @end

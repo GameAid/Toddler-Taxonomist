@@ -14,6 +14,7 @@
 #import "Organism.h"
 #import "OrganismDetails.h"
 #import "SoundManager.h"
+#import "LoadingScene.h"
 
 @implementation BoardLayer
 @synthesize picturesArray_1, picturesArray_2, picturesArray_4, picturesArray_8, picturesArray_40;
@@ -104,10 +105,19 @@
         [self scheduleUpdate];
         
         
-        
-        
     }
     return self;
+}
+
+- (void) onExit
+{
+    CCLOG(@"[BoardLayer onExit]");
+    _activeQuestion = nil;
+    [self removeAllChildrenWithCleanup:YES];
+    // [self removeFromParentAndCleanup:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [super onExit];
 }
 
 #pragma mark -
@@ -226,26 +236,22 @@
         [self addChild:t z:1 tag:tileTag];
     }
     
+
+    NSString *questionText = [q questionString];
+    CCLabelBMFont *questionLabel = [CCLabelBMFont labelWithString:questionText fntFile:@"audimat_36_white.fnt"];
+    questionLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 64);
+    [self addChild:questionLabel z:0 tag:7777];
     
-    if (_showInfoPanel) {
-        
-        NSString *orgName = [[[_tiles objectAtIndex:0] organism] specificName];
-        CCLabelBMFont *nameLabel = [CCLabelBMFont labelWithString:orgName fntFile:@"audimat_45_white.fnt"];
-        nameLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 64);
-        [self addChild:nameLabel];
-        
-    } else {
-        NSString *questionText = [q questionString];
-        CCLabelBMFont *questionLabel = [CCLabelBMFont labelWithString:questionText fntFile:@"audimat_36_white.fnt"];
-        questionLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 64);
-        [self addChild:questionLabel z:0 tag:7777];
-        
-        CCSprite *finger = [CCSprite spriteWithFile:@"finger.png"];
-        [finger setAnchorPoint:ccp(0,0.5)];
-        [finger setPosition:ccp(questionLabel.position.x + 5 + (questionLabel.contentSize.width * 0.5), questionLabel.position.y)];
-        [self addChild:finger z:0 tag:12121];
-        
-    }
+    CCSprite *finger = [CCSprite spriteWithFile:@"finger.png"];
+    [finger setAnchorPoint:ccp(0,0.5)];
+    [finger setPosition:ccp(questionLabel.position.x + 5 + (questionLabel.contentSize.width * 0.5), questionLabel.position.y)];
+    [self addChild:finger z:0 tag:12121];
+    
+    CCLabelBMFont *returnToMenuLabel = [CCLabelBMFont labelWithString:@"Return to Menu" fntFile:@"audimat_16_white.fnt"];
+    returnToMenuLabel.position = ccp([[CCDirector sharedDirector] winSize].width * 0.5, 5);
+    returnToMenuLabel.anchorPoint = ccp(0.5,0);
+    [self addChild:returnToMenuLabel z:0 tag:6666];
+
     
     // Set flag to turn on touch enabled
     [self setNeedsTouch:YES];
@@ -260,6 +266,15 @@
     [[AnimalCatalogue animalCatalogue] resetCatalogue];
     Question *newQ = [[Question alloc] initContinuingFromQuestion:[self activeQuestion] correctOnFirstGuess:[self firstGuess]];
     [self setQuestionWithDifficulty:DifficultyINVALID orQuestion:newQ];
+}
+
+- (void) quitToMenu
+{
+    CCLOG(@"[BoardLayer quitToMenu]");
+    // Transition to the Main menu
+    CCScene *menuScene = [LoadingScene sceneWithTargetScene:TargetSceneMainMenuScene];
+    [[SoundManager manager] stopBackgroundMusic];
+    [[CCDirector sharedDirector] replaceScene:menuScene];
 }
 
 #pragma mark Touch events
@@ -278,6 +293,14 @@
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint touchLocGL = [self locationFromTouch:[touches anyObject]];
+    
+    // Check first if they want to return to the menu
+    if (CGRectContainsPoint([self getChildByTag:6666].boundingBox, touchLocGL)) {
+        
+        [self quitToMenu];
+        return;
+    }
+    
     
     // CCNode *qtext = [self getChildByTag:7777];
     CGRect qRect = CGRectMake(0, 0, [CCDirector sharedDirector].winSize.width, 128);
@@ -361,7 +384,6 @@
 
     [[SoundManager manager] playNow:[_activeQuestion questionSoundString] andEmptyQueue:YES withUnload:NO];
     [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.25f];
-
 }
 
 #pragma mark SETUP

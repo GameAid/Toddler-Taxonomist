@@ -9,6 +9,7 @@
 #import "LoadingScene.h"
 #import "MainMenuLayer.h"
 #import "BoardLayer.h"
+#import "InfoLayer.h"
 
 
 @interface LoadingScene (PrivateMethods)
@@ -57,7 +58,20 @@
 	{
 		case TargetSceneMainMenuScene:
         {
-            CCTransitionFade* transition = [CCTransitionFade transitionWithDuration:1 scene:[MainMenuLayer scene] withColor:ccBLACK];
+            
+            CCScene *mainMenuScene = [MainMenuLayer scene];
+            MainMenuLayer *mainMenuLayer = (MainMenuLayer *)[mainMenuScene getChildByTag:1];
+            
+            InfoLayer *infoLayer = [[InfoLayer alloc] initWithColor:ccc4(0, 0, 0, 220)];
+            
+            [mainMenuLayer addInfoLayerAsChild:infoLayer];
+            infoLayer = nil;
+            
+            //[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:mainMenuScene]];
+            
+            
+            
+            CCTransitionFade* transition = [CCTransitionFade transitionWithDuration:1 scene:mainMenuScene withColor:ccBLACK];
 			[[CCDirector sharedDirector] replaceScene:transition];
             break;
         }
