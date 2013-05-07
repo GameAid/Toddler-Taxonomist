@@ -13,6 +13,7 @@
 #import "Tile.h"
 #import "NSMutableArray+Shuffling.h"
 #import "Organism.h"
+#import "SoundManager.h"
 
 @implementation Question
 
@@ -116,6 +117,7 @@
                 return;
                 
             } else {
+                [[SoundManager manager] playNext:@"more_challenging_names.mp3" withUnload:YES];
                 [self setQDifficulty:[oldQuestion qDifficulty] + 1];
                 [self setQPicMode:PictureModePictures_02];
                 [self setQuestionNumberInSequence:0];
@@ -128,18 +130,20 @@
             // Increment pictureMode but keep same difficulty level
             [self setQDifficulty:[oldQuestion qDifficulty]];
             switch ([oldQuestion qPicMode]) {
-                    
                 case PictureModePictures_02:
+                    [[SoundManager manager] playNext:@"more_pictures.mp3" withUnload:YES];
                     [self setQPicMode:PictureModePictures_04];
                     [self sendTextureClearNotification];
                     break;
                     
                 case PictureModePictures_04:
+                    [[SoundManager manager] playNext:@"more_pictures.mp3" withUnload:YES];
                     [self setQPicMode:PictureModePictures_08];
                     [self sendTextureClearNotification];
                     break;
                     
                 case PictureModePictures_08:
+                    [[SoundManager manager] playNext:@"more_pictures.mp3" withUnload:YES];
                     [self setQPicMode:PictureModePictures_40];
                     [self sendTextureClearNotification];
                     break;
@@ -164,6 +168,7 @@
                 [self setQuestionNumberInSequence:0];
                 return;
             } else {
+                [[SoundManager manager] playNext:@"less_challenging_names.mp3" withUnload:YES];
                 [self setQDifficulty:[oldQuestion qDifficulty] - 1];
                 [self setQPicMode:PictureModePictures_08];
                 [self setQuestionNumberInSequence:0];
@@ -178,18 +183,21 @@
             [self setQDifficulty:[oldQuestion qDifficulty]];
             switch ([oldQuestion qPicMode]) {
                 case PictureModePictures_40:
+                    [[SoundManager manager] playNext:@"fewer_picture.mp3" withUnload:YES];
                     [self setQPicMode:PictureModePictures_08];
                     [self setQuestionNumberInSequence:0];
                     [self sendTextureClearNotification];
                     return;
                     break;
                 case PictureModePictures_08:
+                    [[SoundManager manager] playNext:@"fewer_picture.mp3" withUnload:YES];
                     [self setQPicMode:PictureModePictures_04];
                     [self setQuestionNumberInSequence:0];
                     [self sendTextureClearNotification];
                     return;
                     break;
                 case PictureModePictures_04:
+                    [[SoundManager manager] playNext:@"fewer_picture.mp3" withUnload:YES];
                     [self setQPicMode:PictureModePictures_02];
                     [self setQuestionNumberInSequence:0];
                     [self sendTextureClearNotification];

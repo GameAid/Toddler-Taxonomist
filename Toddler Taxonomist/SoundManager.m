@@ -68,7 +68,7 @@ static SoundManager *manager;
         
         _playingBackgroundName = songName;
         
-        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.25f];
+        [[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.22f];
         
         [[SimpleAudioEngine sharedEngine] performSelector:@selector(playBackgroundMusic:) withObject:_playingBackgroundName afterDelay:1.0f];
         return 0.0f;
@@ -128,6 +128,12 @@ static SoundManager *manager;
     return duration;
 }
 
+- (void)playConcurrent:(NSString *)soundName
+{
+    [[SimpleAudioEngine sharedEngine] playEffect:soundName];
+    [_unloadQueue addObject:[soundName copy]];
+}
+
 
 - (void)stopPlaying
 {
@@ -153,8 +159,7 @@ static SoundManager *manager;
 
 - (void)fadeEffect
 {
-    // CCLOG(@"Fading Source: %@", _playingSource.description);
-
+    if (_playingSource) {
     // Fade out the theme song -- what happens if it isn't playing?
     [CDXPropertyModifierAction fadeSoundEffect:1.0f
                                    finalVolume:0.0f
@@ -162,12 +167,13 @@ static SoundManager *manager;
                                     shouldStop:YES
                                         effect:_playingSource];
     
+    [_unloadQueue addObject:[_playingName copy]];
+        
     _playingName     = @"";
     _playingSource   = nil;
     _isPlayingEffect = NO;
-    
-    // [self performSelector:@selector(unload:) withObject:[_playingName copy] afterDelay:3.0f];
-    [_unloadQueue addObject:[_playingName copy]];
+        
+    }
 }
 
 

@@ -140,8 +140,8 @@ static QuestionDifficulty _startDifficulty;
         
                     [[SoundManager manager] fadeEffect];
                     [[SoundManager manager] playNext:@"GameLoopNew.mp3" asBackground:YES];
-                
-                                                                      
+                    [[SoundManager manager] playConcurrent:@"here_we_go.mp3"];
+        
                     CCScene *gameScene = [LoadingScene sceneWithTargetScene:TargetSceneBoardScene];
                                                                       
                     [[CCDirector sharedDirector] performSelector:@selector(replaceScene:)
@@ -221,6 +221,7 @@ static QuestionDifficulty _startDifficulty;
             _mediumButton.visible   = NO;
             _easyButton.visible     = YES;
             _startDifficulty        = DifficultyEasy;
+            [[SoundManager manager] playConcurrent:@"difficulty_to_easy.mp3"];
             break;
         }
             
@@ -231,6 +232,7 @@ static QuestionDifficulty _startDifficulty;
             _mediumButton.visible   = YES;
             _easyButton.visible     = NO;
             _startDifficulty        = DifficultyMedium;
+            [[SoundManager manager] playConcurrent:@"difficulty_to_medium.mp3"];
             break;
         }
             
@@ -241,6 +243,7 @@ static QuestionDifficulty _startDifficulty;
             _mediumButton.visible   = NO;
             _easyButton.visible     = NO;
             _startDifficulty        = DifficultyHard;
+            [[SoundManager manager] playConcurrent:@"difficulty_to_very_hard.mp3"];
             break;
         }
             
@@ -251,6 +254,7 @@ static QuestionDifficulty _startDifficulty;
             _mediumButton.visible   = NO;
             _easyButton.visible     = YES;
             _startDifficulty        = DifficultyEasy;
+            [[SoundManager manager] playConcurrent:@"difficulty_to_easy.mp3"];
             break;
         }
     }
