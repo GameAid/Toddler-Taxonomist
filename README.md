@@ -1,6 +1,6 @@
 # Toddler Taxonomist 
 
-Toddler Taxonomist is an iPad app designed to entertain young children while helping them learn the names of a lot of different types of organisms. In its first incarnation, all of the organisms are animals, but there are plans to expand to include other Kindoms. I mean, really: what toddlers don't want to learn how to identify fungi by their scientifc names?
+Toddler Taxonomist is an iPad app designed to entertain young children while helping them learn the names of a lot of different types of organisms. In its first incarnation, all of the organisms are animals, but there are plans to expand to include other Kindoms. I mean, really: what toddlers don't want to learn how to identify animals by their scientifc names? :)
 
 Toddler Taxonomist and its source are developed and released by [GameAid](http://www.gameaid.org), a new non-profit initiative in the process of applying for 501(c)3 status. Please visit [http://www.gameaid.org](http://www.gameaid.org) for more information.
 
@@ -12,9 +12,7 @@ Toddler Taxonomist by GameAid is licensed under a Creative Commons Attribution-S
 
 ## General Information
 
-The purpose of Toddler Taxonomist is to entertain 2-4 year old children.
-
-**Toddler Taxonomist is in a prototype stage. The code is disorganized.**
+The purpose of Toddler Taxonomist is to entertain 2-6 year old children. At the higher difficulty levels, it also may entertain older children and adults.
 
 There is a display mode and a difficulty level. With each difficulty level, the application runs through several display modes. First it will show 2 photos, then 4, then 8, then 40, after which it will jump to the next difficulty level and show 2 pictures, etc. When a player misses a question on the first guess, their progress is impeded. When they correctly answer a question, they progress towards the next difficulty level. For most toddlers, they never will notice this. The goal is that it will settle on a difficulty level where they sometimes answer correctly and sometimes don't, in order to present a consistent challenge. 
 
@@ -100,7 +98,7 @@ Each species has voiceover of their descriptive text. It is stored in a file cal
 
 #### Personal Developer Note
 
-I started and am trying to get [GameAid](http://www.gameaid.org) off the ground. Founding a federally-recognized non-profit corporation is somewhat expensive. While Toddler Taxonomist is a GameAid product, it currently is published through [The Perihelion Group](http://www.theperiheliongroup.com)'s developer account. The Perihelion Group is an LLC through which I do my for-profit work.
+I started and am trying to get [GameAid](http://www.gameaid.org) off the ground. While Toddler Taxonomist is a GameAid product, it currently is published through [The Perihelion Group](http://www.theperiheliongroup.com)'s developer account. The Perihelion Group is an LLC through which I do my for-profit work.
 
 My hope is to take proceeds from Toddler Taxonomist and use them to pay for some of the expenses in supporting GameAid. Once GameAid is properly established, The Perihelion Group will no longer sell Toddler Taxonomist and all legal rights to it and copyrights will be donated to GameAid.
 
