@@ -5249,12 +5249,12 @@
 		6F15D2DF171DA1B100C43118 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = armv7;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Clay Heaton (EHBZK36A62)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Clay Heaton (EHBZK36A62)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -5267,24 +5267,25 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PROVISIONING_PROFILE = "8989E9E5-D618-48B8-B5AF-9D0BD5741D24";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8989E9E5-D618-48B8-B5AF-9D0BD5741D24";
 				SDKROOT = iphoneos5.1;
 				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
 		6F15D2E0171DA1B100C43118 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = armv7;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Clay Heaton (EHBZK36A62)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Perihelion Group (F33S68Q5KX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Perihelion Group (F33S68Q5KX)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -5294,11 +5295,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PROVISIONING_PROFILE = "1DE6DD27-CB02-4880-98EE-AAA609404481";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1DE6DD27-CB02-4880-98EE-AAA609404481";
 				SDKROOT = iphoneos5.1;
 				TARGETED_DEVICE_FAMILY = 2;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
@@ -5306,6 +5308,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = armv7;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Taxonomist.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Clay Heaton (EHBZK36A62)";
@@ -5318,7 +5321,7 @@
 					"\"Toddler Taxonomist/libs/kazmath/include\"",
 				);
 				INFOPLIST_FILE = "Toddler Taxonomist/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -5328,6 +5331,7 @@
 				PROVISIONING_PROFILE = "F2F7C2D7-79C2-4B87-8033-46C291411D00";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F2F7C2D7-79C2-4B87-8033-46C291411D00";
 				SDKROOT = iphoneos5.1;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -5336,6 +5340,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = armv7;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Taxonomist.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: The Perihelion Group (F33S68Q5KX)";
@@ -5347,7 +5352,7 @@
 					"\"Toddler Taxonomist/libs/kazmath/include\"",
 				);
 				INFOPLIST_FILE = "Toddler Taxonomist/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -5358,6 +5363,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1DE6DD27-CB02-4880-98EE-AAA609404481";
 				SDKROOT = iphoneos5.1;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
