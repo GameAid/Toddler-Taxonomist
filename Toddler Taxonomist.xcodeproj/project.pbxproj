@@ -1105,6 +1105,10 @@
 		6FBCD9741725B23000F48A57 /* audimat_24_white_italic-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FBCD9701725B23000F48A57 /* audimat_24_white_italic-hd.png */; };
 		6FBCD9751725B23000F48A57 /* audimat_24_white_italic.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 6FBCD9711725B23000F48A57 /* audimat_24_white_italic.fnt */; };
 		6FBCD9761725B23000F48A57 /* audimat_24_white_italic.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FBCD9721725B23000F48A57 /* audimat_24_white_italic.png */; };
+		6FD0C9C517EFC7A100338972 /* Icon-40x40.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD0C9C117EFC7A100338972 /* Icon-40x40.png */; };
+		6FD0C9C617EFC7A100338972 /* Icon-76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD0C9C217EFC7A100338972 /* Icon-76x76.png */; };
+		6FD0C9C717EFC7A100338972 /* Icon-80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD0C9C317EFC7A100338972 /* Icon-80x80.png */; };
+		6FD0C9C817EFC7A100338972 /* Icon-152x152.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD0C9C417EFC7A100338972 /* Icon-152x152.png */; };
 		6FD2DFA2172EC13A00E8E1BD /* GameLoop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6FD2DFA1172EC13A00E8E1BD /* GameLoop.mp3 */; };
 		6FD2DFA6172ED43800E8E1BD /* gameaid_leader.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6FD2DFA5172ED43800E8E1BD /* gameaid_leader.mp3 */; };
 		6FEC2C02172A006B00A5C3B7 /* MainMenuSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FEC2C01172A006B00A5C3B7 /* MainMenuSlider.m */; };
@@ -2411,6 +2415,10 @@
 		6FBCD9701725B23000F48A57 /* audimat_24_white_italic-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audimat_24_white_italic-hd.png"; sourceTree = "<group>"; };
 		6FBCD9711725B23000F48A57 /* audimat_24_white_italic.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = audimat_24_white_italic.fnt; sourceTree = "<group>"; };
 		6FBCD9721725B23000F48A57 /* audimat_24_white_italic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audimat_24_white_italic.png; sourceTree = "<group>"; };
+		6FD0C9C117EFC7A100338972 /* Icon-40x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40x40.png"; sourceTree = "<group>"; };
+		6FD0C9C217EFC7A100338972 /* Icon-76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76x76.png"; sourceTree = "<group>"; };
+		6FD0C9C317EFC7A100338972 /* Icon-80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80x80.png"; sourceTree = "<group>"; };
+		6FD0C9C417EFC7A100338972 /* Icon-152x152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152x152.png"; sourceTree = "<group>"; };
 		6FD2DFA1172EC13A00E8E1BD /* GameLoop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GameLoop.mp3; sourceTree = "<group>"; };
 		6FD2DFA5172ED43800E8E1BD /* gameaid_leader.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameaid_leader.mp3; sourceTree = "<group>"; };
 		6FDA1604172CCAB8003D4904 /* animal_list.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = animal_list.xlsx; sourceTree = "<group>"; };
@@ -3397,6 +3405,10 @@
 		6F15D2FE171DA99100C43118 /* Icons and Start Screens */ = {
 			isa = PBXGroup;
 			children = (
+				6FD0C9C117EFC7A100338972 /* Icon-40x40.png */,
+				6FD0C9C217EFC7A100338972 /* Icon-76x76.png */,
+				6FD0C9C317EFC7A100338972 /* Icon-80x80.png */,
+				6FD0C9C417EFC7A100338972 /* Icon-152x152.png */,
 				6F1713C9173753DA0045314B /* Icon-ipad.png */,
 				6F1713CA173753DA0045314B /* Icon-ipad@2x.png */,
 				6F1713CB173753DA0045314B /* Icon-Small-50.png */,
@@ -4072,6 +4084,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "The Perihelion Group";
+				TargetAttributes = {
+					6F15D132171DA1AF00C43118 = {
+						DevelopmentTeam = F33S68Q5KX;
+					};
+				};
 			};
 			buildConfigurationList = 6F15D12E171DA1AF00C43118 /* Build configuration list for PBXProject "Toddler Taxonomist" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -4189,6 +4206,7 @@
 				6F0A76B71720474F00E62450 /* tiger_03_1280-1280.jpg in Resources */,
 				6F9FFADE17220ED800A88391 /* alligator_01_256-256.jpg in Resources */,
 				6F9FFADF17220ED800A88391 /* alligator_01_1024-640.jpg in Resources */,
+				6FD0C9C517EFC7A100338972 /* Icon-40x40.png in Resources */,
 				6F9FFAE017220ED800A88391 /* alligator_01_1024-1280.jpg in Resources */,
 				6F9FFAE117220ED800A88391 /* alligator_01_1280-1280.jpg in Resources */,
 				6F9FFAE217220ED800A88391 /* alligator_02_256-256.jpg in Resources */,
@@ -4223,6 +4241,7 @@
 				6F9FFAFF17220ED800A88391 /* bird_01_1024-640.jpg in Resources */,
 				6F9FFB0017220ED800A88391 /* bird_01_1024-1280.jpg in Resources */,
 				6F9FFB0117220ED800A88391 /* bird_01_1280-1280.jpg in Resources */,
+				6FD0C9C817EFC7A100338972 /* Icon-152x152.png in Resources */,
 				6F9FFB0217220ED800A88391 /* bird_02_256-256.jpg in Resources */,
 				6F9FFB0317220ED800A88391 /* bird_02_1024-640.jpg in Resources */,
 				6F9FFB0417220ED800A88391 /* bird_02_1024-1280.jpg in Resources */,
@@ -4583,6 +4602,7 @@
 				6F1B707B1732001F001D3308 /* thats_armadillo.mp3 in Resources */,
 				6F1B707C1732001F001D3308 /* thats_beaver.mp3 in Resources */,
 				6F1B707D1732001F001D3308 /* thats_bird.mp3 in Resources */,
+				6FD0C9C617EFC7A100338972 /* Icon-76x76.png in Resources */,
 				6F1B707E1732001F001D3308 /* thats_dog.mp3 in Resources */,
 				6F1B707F1732001F001D3308 /* thats_dolphin.mp3 in Resources */,
 				6F1B70801732001F001D3308 /* thats_elephant.mp3 in Resources */,
@@ -4609,6 +4629,7 @@
 				6F1B70951732001F001D3308 /* thats_salamander.mp3 in Resources */,
 				6F1B70961732001F001D3308 /* thats_shark.mp3 in Resources */,
 				6F1B70971732001F001D3308 /* thats_sloth.mp3 in Resources */,
+				6FD0C9C717EFC7A100338972 /* Icon-80x80.png in Resources */,
 				6F1B70981732001F001D3308 /* thats_tapir.mp3 in Resources */,
 				6F1B70991732001F001D3308 /* thats_tarsier.mp3 in Resources */,
 				6F1B709A1732001F001D3308 /* thats_tiger.mp3 in Resources */,
@@ -5317,9 +5338,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Toddler Taxonomist/Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"Toddler Taxonomist/libs/kazmath/include\"",
-				);
+				HEADER_SEARCH_PATHS = "\"Toddler Taxonomist/libs/kazmath/include\"";
 				INFOPLIST_FILE = "Toddler Taxonomist/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = (
@@ -5348,9 +5367,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Toddler Taxonomist/Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"Toddler Taxonomist/libs/kazmath/include\"",
-				);
+				HEADER_SEARCH_PATHS = "\"Toddler Taxonomist/libs/kazmath/include\"";
 				INFOPLIST_FILE = "Toddler Taxonomist/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = (

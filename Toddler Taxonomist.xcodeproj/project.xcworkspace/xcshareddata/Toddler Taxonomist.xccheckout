@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3A1B6122-5DC8-4D01-8C61-F4FAE169AF84</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Toddler Taxonomist</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E53773E0-8938-4CC0-976B-530A5036EB76</key>
+		<string>https://github.com/GameAid/Toddler-Taxonomist.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Toddler Taxonomist.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E53773E0-8938-4CC0-976B-530A5036EB76</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/GameAid/Toddler-Taxonomist.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E53773E0-8938-4CC0-976B-530A5036EB76</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E53773E0-8938-4CC0-976B-530A5036EB76</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Toddler Taxonomist</string>
+		</dict>
+	</array>
+</dict>
+</plist>
