@@ -5340,7 +5340,7 @@
 				GCC_PREFIX_HEADER = "Toddler Taxonomist/Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"Toddler Taxonomist/libs/kazmath/include\"";
 				INFOPLIST_FILE = "Toddler Taxonomist/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -5349,7 +5349,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8989E9E5-D618-48B8-B5AF-9D0BD5741D24";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8989E9E5-D618-48B8-B5AF-9D0BD5741D24";
-				SDKROOT = iphoneos5.1;
+				SDKROOT = iphoneos7.0;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -5369,7 +5369,7 @@
 				GCC_PREFIX_HEADER = "Toddler Taxonomist/Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"Toddler Taxonomist/libs/kazmath/include\"";
 				INFOPLIST_FILE = "Toddler Taxonomist/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -5378,7 +5378,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1DE6DD27-CB02-4880-98EE-AAA609404481";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1DE6DD27-CB02-4880-98EE-AAA609404481";
-				SDKROOT = iphoneos5.1;
+				SDKROOT = iphoneos7.0;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
